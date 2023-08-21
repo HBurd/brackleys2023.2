@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb = null;
     bool in_water = true;
+    bool touching_boat = false;
 
     // Start is called before the first frame update
     void Start()
@@ -43,21 +44,27 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag != "Sky")
+        if (other.tag == "Sky")
         {
-            return;
+            in_water = false;
+            rb.gravityScale = 1.0f;
         }
-        in_water = false;
-        rb.gravityScale = 1.0f;
+        else if (other.tag == "Boat")
+        {
+            touching_boat = true;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.tag != "Sky")
+        if (other.tag == "Sky")
         {
-            return;
+            in_water = true;
+            rb.gravityScale = 0.0f;
         }
-        in_water = true;
-        rb.gravityScale = 0.0f;
+        else if (other.tag == "Boat")
+        {
+            touching_boat = false;
+        }
     }
 }
