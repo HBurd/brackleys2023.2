@@ -7,15 +7,16 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb = null;
     bool in_water = true;
 
-    [SerializeField]
     DialogueSystem dialogue = null;
-
     DialogueSource dialogue_source = null;
+    Tooltip tooltip = null;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        dialogue = GameObject.FindFirstObjectByType<DialogueSystem>(FindObjectsInactive.Include);
+        tooltip = GameObject.Find("Canvas/Tooltip").GetComponent<Tooltip>();
     }
 
     // Update is called once per frame
@@ -66,6 +67,7 @@ public class PlayerMovement : MonoBehaviour
         else if (other.tag == "Dialogue")
         {
             dialogue_source = other.GetComponentInParent<DialogueSource>();
+            tooltip.SetText("RMB to talk");
         }
     }
 
@@ -79,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         else if (other.tag == "Dialogue")
         {
             dialogue_source = null;
+            tooltip.SetText("");
         }
     }
 }
