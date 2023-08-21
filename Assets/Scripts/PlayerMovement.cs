@@ -6,12 +6,17 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb = null;
     bool in_water = true;
-    bool touching_boat = false;
+
+    DialogueSystem dialogue = null;
+    DialogueSource dialogue_source = null;
+    Tooltip tooltip = null;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        dialogue = GameObject.FindFirstObjectByType<DialogueSystem>(FindObjectsInactive.Include);
+        tooltip = GameObject.Find("Canvas/Tooltip").GetComponent<Tooltip>();
     }
 
     // Update is called once per frame
@@ -40,6 +45,16 @@ public class PlayerMovement : MonoBehaviour
 
         rb.AddForce(-0.1f * velocity_forward);
         rb.AddForce(-0.5f * velocity_normal);
+
+
+        if (dialogue_source != null && Input.GetMouseButton(1))
+        {
+            dialogue.Open(dialogue_source);
+        }
+        else if(dialogue_source == null)
+        {
+            dialogue.Close();
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -49,9 +64,10 @@ public class PlayerMovement : MonoBehaviour
             in_water = false;
             rb.gravityScale = 1.0f;
         }
-        else if (other.tag == "Boat")
+        else if (other.tag == "Dialogue")
         {
-            touching_boat = true;
+            dialogue_source = other.GetComponentInParent<DialogueSource>();
+            tooltip.SetText("RMB to talk");
         }
     }
 
@@ -62,9 +78,10 @@ public class PlayerMovement : MonoBehaviour
             in_water = true;
             rb.gravityScale = 0.0f;
         }
-        else if (other.tag == "Boat")
+        else if (other.tag == "Dialogue")
         {
-            touching_boat = false;
+            dialogue_source = null;
+            tooltip.SetText("");
         }
     }
 }
