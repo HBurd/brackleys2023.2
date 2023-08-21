@@ -16,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         dialogue = GameObject.FindFirstObjectByType<DialogueSystem>(FindObjectsInactive.Include);
-        tooltip = GameObject.Find("Canvas/Tooltip").GetComponent<Tooltip>();
+        tooltip = GameObject.Find("UI/Tooltip").GetComponent<Tooltip>();
     }
 
     // Update is called once per frame
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (other.tag == "Dialogue")
         {
-            dialogue_source = other.GetComponentInParent<DialogueSource>();
+            dialogue_source = other.GetComponent<DialogueSource>();
             tooltip.SetText("RMB to talk");
         }
     }
