@@ -52,7 +52,7 @@ public class VolumetricLight : MonoBehaviour
         float dx = Mathf.PerlinNoise(sample_point.x, sample_point.y);
         float dy = Mathf.PerlinNoise(sample_point.x + 1.0f, sample_point.y);
 
-        Vector3 position = start_pos + 2.0f * (Vector3.right * dx + Vector3.up * dy);
+        Vector3 position = start_pos + 5.0f * (Vector3.right * dx + Vector3.up * dy);
         transform.position = position;
     }
 }
