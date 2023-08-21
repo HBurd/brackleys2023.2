@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Sky
   - Dialogue
+  - VolumetricLight
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - VolumetricLight
   - 
   - 
   - 
