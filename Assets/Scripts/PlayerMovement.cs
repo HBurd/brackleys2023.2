@@ -11,12 +11,23 @@ public class PlayerMovement : MonoBehaviour
     DialogueSource dialogue_source = null;
     Tooltip tooltip = null;
 
+    Animator childAnimator = null;
+    DialogueSystem dialogue = null;
+    DialogueSource dialogue_source = null;
+    Tooltip tooltip = null;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         dialogue = GameObject.FindFirstObjectByType<DialogueSystem>(FindObjectsInactive.Include);
         tooltip = GameObject.Find("UI/Tooltip").GetComponent<Tooltip>();
+
+        if (transform.childCount > 0)
+        {
+            Transform child = transform.GetChild(0);
+            childAnimator = child.GetComponent<Animator>();
+        }
     }
 
     // Update is called once per frame
@@ -38,6 +49,10 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             rb.AddForce(mouse_delta);
+            childAnimator.SetBool("isSwimming", true);
+        } else 
+        {
+            childAnimator.SetBool("isSwimming", false);
         }
 
         Vector2 velocity_forward = Vector2.Dot(rb.velocity, mouse_delta_normalized) * mouse_delta_normalized;
