@@ -10,7 +10,6 @@ public class VolumetricLightManager : MonoBehaviour
     {
         GameObject[] light_objects = GameObject.FindGameObjectsWithTag("VolumetricLight");
         VolumetricLight[] lights = new VolumetricLight[light_objects.Length];
-        Debug.Log(light_objects.Length);
 
         for (int i = 0; i < light_objects.Length; ++i)
         {
