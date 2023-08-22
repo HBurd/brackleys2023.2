@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 velocity_normal = rb.velocity - velocity_forward;
 
         rb.AddForce(-0.1f * velocity_forward);
-        rb.AddForce(-0.5f * velocity_normal);
+        rb.AddForce(-velocity_normal);
 
 
         if (dialogue_source != null && Input.GetMouseButton(1))

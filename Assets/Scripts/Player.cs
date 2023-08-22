@@ -19,6 +19,12 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject sonar_light;
 
+    [SerializeField]
+    float max_sonar_intensity = 0.1f;
+
+    [SerializeField]
+    float sonar_range = 10.0f;
+
     void Start()
     {
         tooltip = GameObject.Find("UI/TreasureDisplay").GetComponent<Tooltip>();
@@ -40,10 +46,11 @@ public class Player : MonoBehaviour
             Vector2 dir = (transform.right.x * Mathf.Cos(random_angle) - transform.right.y * Mathf.Sin(random_angle)) * Vector2.right
                 + (transform.right.x * Mathf.Sin(random_angle) + transform.right.y * Mathf.Cos(random_angle)) * Vector2.up;
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, 20.0f, LayerMask.GetMask("Environment"));
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, dir, sonar_range, LayerMask.GetMask("Environment"));
             if (hit.collider != null)
             {
-                Instantiate(sonar_light, hit.point, Quaternion.identity);
+                GameObject light = Instantiate(sonar_light, hit.point, Quaternion.identity);
+                light.GetComponent<KillAfter>().initial_intensity = max_sonar_intensity * (1.0f - hit.distance / sonar_range);
             }
 
             next_ping_time = Time.timeAsDouble + 1.0f / sonar_rate;
