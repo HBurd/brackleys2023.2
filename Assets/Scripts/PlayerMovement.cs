@@ -6,11 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb = null;
     bool in_water = true;
-
-    DialogueSystem dialogue = null;
-    DialogueSource dialogue_source = null;
-    Tooltip tooltip = null;
-
+    
     Animator childAnimator = null;
     DialogueSystem dialogue = null;
     DialogueSource dialogue_source = null;
