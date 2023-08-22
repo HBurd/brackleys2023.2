@@ -10,6 +10,12 @@ public class Wally : MonoBehaviour
     [SerializeField]
     Sprite portrait;
 
+    [SerializeField]
+    TextAsset text_json;
+
+    WhaleText loaded_text;
+    int text_index = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +23,26 @@ public class Wally : MonoBehaviour
         talkable.Interact += Interact;
 
         dialogue = UIGlobals.Get().GetDialogue();
+
+        loaded_text = JsonUtility.FromJson<WhaleText>(text_json.text);
     }
 
     void Interact()
     {
-        dialogue.Open("I'm a whale", portrait);
+        if (text_index >= loaded_text.intro.Length)
+        {
+            text_index = 0;
+            dialogue.Close();
+            return;
+        }
+
+        dialogue.Set(loaded_text.intro[text_index]);
+        text_index += 1;
     }
+}
+
+[System.Serializable]
+public struct WhaleText
+{
+    public Dialogue[] intro;
 }

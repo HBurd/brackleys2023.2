@@ -24,7 +24,9 @@ public class Talkable : MonoBehaviour
     {
         if (active && Input.GetMouseButtonDown(1))
         {
+            dialogue.Open();
             Interact?.Invoke();
+            tooltip.SetText("RMB to advance");
         }
     }
 

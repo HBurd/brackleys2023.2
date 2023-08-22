@@ -11,12 +11,15 @@ public class PlayerMovement : MonoBehaviour
 
     SpriteRenderer sprite = null;
 
+    DialogueSystem dialogue;
+
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        dialogue = UIGlobals.Get().GetDialogue();
     }
 
     // Update is called once per frame
@@ -24,6 +27,12 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!in_water)
         {
+            return;
+        }
+
+        if (dialogue.IsOpen())
+        {
+            rb.velocity = Vector2.zero;
             return;
         }
 

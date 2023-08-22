@@ -10,6 +10,15 @@ public class Boat : MonoBehaviour
     [SerializeField]
     Sprite parrot;
 
+    [SerializeField]
+    Sprite pirate;
+
+    [SerializeField]
+    TextAsset text_json;
+
+    BoatText loaded_text;
+    int text_index = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +26,26 @@ public class Boat : MonoBehaviour
         talkable.Interact += Interact;
 
         dialogue = UIGlobals.Get().GetDialogue();
+
+        loaded_text = JsonUtility.FromJson<BoatText>(text_json.text);
     }
 
     void Interact()
     {
-        dialogue.Open("I'm a boat", parrot);
+        if (text_index >= loaded_text.dialogue.Length)
+        {
+            text_index = 0;
+            dialogue.Close();
+            return;
+        }
+
+        dialogue.Set(loaded_text.dialogue[text_index]);
+        text_index += 1;
     }
+}
+
+[System.Serializable]
+public struct BoatText
+{
+    public Dialogue[] dialogue;
 }

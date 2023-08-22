@@ -1,0 +1,20 @@
+{
+	"intro": [
+		{
+			"name": "Wally",
+			"text": "I'm Wally"
+		},
+		{
+			"name": "Wally",
+			"text": "What are you doing here?"
+		},
+		{
+			"name": "Wally",
+			"text": "Check out my store..."
+		},
+		{
+			"name": "Store",
+			"text": "..."
+		}
+	]
+}

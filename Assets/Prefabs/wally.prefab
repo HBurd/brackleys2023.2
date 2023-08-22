@@ -184,6 +184,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portrait: {fileID: 21300000, guid: fb927ecf90ae81b41a48b91d211b237a, type: 3}
+  text_json: {fileID: 4900000, guid: 428aec87c776cde43a027a11718042af, type: 3}
 --- !u!114 &5400937587357802890
 MonoBehaviour:
   m_ObjectHideFlags: 0
