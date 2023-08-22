@@ -9,8 +9,7 @@ public class KillAfter : MonoBehaviour
 
     double time_of_death = 0.0;
 
-    [SerializeField]
-    float initial_intensity = 0.2f;
+    public float initial_intensity = 0.2f;
 
 
     Light2D light_2d;

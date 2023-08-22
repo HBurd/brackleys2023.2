@@ -174,6 +174,8 @@ MonoBehaviour:
   sonar_rate: 60
   sonar_angle: 30
   sonar_light: {fileID: 7320595630472809980, guid: 2f1f91635f3100246ad3a335404dcb95, type: 3}
+  max_sonar_intensity: 0.1
+  sonar_range: 5
 --- !u!70 &4615741743360627261
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
