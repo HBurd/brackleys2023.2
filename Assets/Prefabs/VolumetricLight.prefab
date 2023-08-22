@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8908939074492928058}
   - component: {fileID: 7946755840279297154}
   m_Layer: 6
-  m_Name: Light 2D
+  m_Name: VolumetricLight
   m_TagString: VolumetricLight
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
