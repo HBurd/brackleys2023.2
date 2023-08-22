@@ -93,8 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3054137419011685328}
-  - component: {fileID: 2059172585176806397}
   - component: {fileID: 1275710952882609456}
+  - component: {fileID: 678561878694222522}
+  - component: {fileID: 8669613892431916505}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Dialogue
@@ -119,18 +120,6 @@ Transform:
   - {fileID: 7033419987678552986}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2059172585176806397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3492524036490254513}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3012e33d087c624eb9d61566ae9ebff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1275710952882609456
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -176,6 +165,31 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.94, y: 7.2}
   m_EdgeRadius: 0
+--- !u!114 &678561878694222522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3492524036490254513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cab53c9859979944ab494e57282030bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8669613892431916505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3492524036490254513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 821805390db4d2b4a8f2f178112f6773, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parrot: {fileID: 21300000, guid: 8a32d16b6b00051429869d7a2bdef761, type: 3}
 --- !u!1 &6861800229646583608
 GameObject:
   m_ObjectHideFlags: 0

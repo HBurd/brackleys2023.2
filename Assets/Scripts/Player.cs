@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        tooltip = GameObject.Find("UI/TreasureDisplay").GetComponent<Tooltip>();
+        tooltip = UIGlobals.Get().GetTreasure();
         GiveTreasure(0);
     }
 

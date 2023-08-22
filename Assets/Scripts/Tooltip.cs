@@ -13,12 +13,6 @@ public class Tooltip : MonoBehaviour
         text = GetComponent<TMP_Text>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetText(string new_text)
     {
         text.text = new_text;
