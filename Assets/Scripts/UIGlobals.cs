@@ -13,6 +13,9 @@ public class UIGlobals : MonoBehaviour
     [SerializeField]
     private Tooltip treasure;
 
+    [SerializeField]
+    private UpgradeScreen upgrades;
+
     public Tooltip GetTooltip()
     {
         return tooltip;
@@ -26,6 +29,11 @@ public class UIGlobals : MonoBehaviour
     public Tooltip GetTreasure()
     {
         return treasure;
+    }
+
+    public UpgradeScreen GetUpgradeScreen()
+    {
+        return upgrades;
     }
 
     public static UIGlobals Get()

@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     Tooltip tooltip = null;
 
     public delegate void ItemEventHandler(ItemType type, int count);
-    public event ItemEventHandler ItemHandler;
+    public event ItemEventHandler ItemEvent;
 
     void Start()
     {
@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         }
         tooltip.SetText(treasure.ToString());
 
-        ItemHandler?.Invoke(type, count);
+        ItemEvent?.Invoke(type, count);
     }
 
     public static Player Get()

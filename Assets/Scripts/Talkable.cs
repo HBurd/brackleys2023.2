@@ -19,6 +19,9 @@ public class Talkable : MonoBehaviour
 
     Player player;
 
+    public delegate void StateChangeEventHandler(string new_state);
+    public event StateChangeEventHandler StateChangeEvent;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,20 +75,31 @@ public class Talkable : MonoBehaviour
             return false;
         }
 
+        bool should_pop = false;
+        QueuedText say_next = new QueuedText { name = "", after = "", priority = -1000 };
+
         foreach (QueuedText text in queued_text)
         {
-            if (past_states.Contains(text.after))
+            if (past_states.Contains(text.after) && text.priority > say_next.priority)
             {
-                current_dialogue = text.name;
-                queued_text.Remove(text);
-                return true;
+                should_pop = true;
+                say_next = text;
             }
         }
+
+        if (should_pop)
+        {
+            current_dialogue = say_next.name;
+            queued_text.Remove(say_next);
+            return true;
+        }
+
         return false;
     }
 
     void Interact()
     {
+        bool dont_pop = false;
         if (text_index >= loaded_text[current_dialogue].dialogue.Length)
         {
             past_states.Add(current_dialogue);
@@ -94,18 +108,37 @@ public class Talkable : MonoBehaviour
             if (!PopQueuedText())
             {
                 dialogue.Close();
+                StateChangeEvent?.Invoke("");
+                return;
             }
-            return;
+            // successfully popped, don't pop again
+            dont_pop = true;
+        }
+
+        if (text_index == 0)
+        {
+            if (!dont_pop)
+            {
+                PopQueuedText();
+            }
+            StateChangeEvent?.Invoke(current_dialogue);
         }
 
         dialogue.Set(loaded_text[current_dialogue].dialogue[text_index]);
         text_index += 1;
     }
 
-    public void SayAfter(string name, string after)
+    public void SayAfter(string name, string after, int priority)
     {
-        queued_text.Add(new QueuedText { name = name, after = after });
-        PopQueuedText();
+        // make sure not to add a duplicate
+        foreach (QueuedText text in queued_text)
+        {
+            if (text.name == name)
+            {
+                return;
+            }
+        }
+        queued_text.Add(new QueuedText { name = name, after = after, priority = priority });
     }
 }
 
@@ -113,4 +146,5 @@ struct QueuedText
 {
     public string name;
     public string after;
+    public int priority;
 }
