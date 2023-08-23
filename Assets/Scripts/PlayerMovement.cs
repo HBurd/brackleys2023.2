@@ -13,6 +13,21 @@ public class PlayerMovement : MonoBehaviour
 
     DialogueSystem dialogue;
 
+    [SerializeField]
+    float max_speed = 1.0f;
+
+    [SerializeField]
+    float max_power = 1.0f;
+
+    [SerializeField]
+    float control_radius = 5.0f;
+
+    [SerializeField]
+    float forward_drag = 0.1f;
+
+    [SerializeField]
+    float normal_drag_factor = 10.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -50,26 +65,30 @@ public class PlayerMovement : MonoBehaviour
             angle += 2.0f * Mathf.PI;
         }
 
-         sprite.flipY = angle > 0.5f * Mathf.PI || angle < -0.5f * Mathf.PI;
+        sprite.flipY = angle > 0.5f * Mathf.PI || angle < -0.5f * Mathf.PI;
 
         Vector3 mouse_delta_normalized = mouse_delta.normalized;
 
         transform.rotation = Quaternion.AngleAxis(angle * 180.0f / Mathf.PI, Vector3.forward);
 
+        Vector2 velocity_forward = Vector2.Dot(rb.velocity, mouse_delta_normalized) * mouse_delta_normalized;
+        Vector2 velocity_normal = rb.velocity - velocity_forward;
+
+        Debug.Log(velocity_forward.magnitude);
+
         if (Input.GetMouseButton(0))
         {
-            rb.AddForce(mouse_delta);
+            float target_speed = Mathf.Lerp(0.0f, max_speed, mouse_delta.magnitude / control_radius);
+            float power = Mathf.Lerp(max_power, forward_drag * target_speed, velocity_forward.magnitude / target_speed);
+            rb.AddForce(power * mouse_delta_normalized);
             animator.SetBool("isSwimming", true);
         } else 
         {
             animator.SetBool("isSwimming", false);
         }
 
-        Vector2 velocity_forward = Vector2.Dot(rb.velocity, mouse_delta_normalized) * mouse_delta_normalized;
-        Vector2 velocity_normal = rb.velocity - velocity_forward;
-
-        rb.AddForce(-0.1f * velocity_forward);
-        rb.AddForce(-velocity_normal);
+        rb.AddForce(-forward_drag * velocity_forward);
+        rb.AddForce(-forward_drag * normal_drag_factor * velocity_normal);
     }
 
     void OnTriggerEnter2D(Collider2D other)
