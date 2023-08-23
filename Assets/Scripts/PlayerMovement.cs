@@ -13,8 +13,8 @@ public class PlayerMovement : MonoBehaviour
 
     DialogueSystem dialogue;
 
-    [SerializeField]
-    float max_speed = 1.0f;
+    //[SerializeField]
+    //float max_speed = 1.0f;
 
     [SerializeField]
     float max_power = 1.0f;
@@ -27,6 +27,11 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     float normal_drag_factor = 10.0f;
+
+    [SerializeField]
+    SpeedLevel[] speed_levels;
+
+    int speed_level = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -78,7 +83,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            float target_speed = Mathf.Lerp(0.0f, max_speed, mouse_delta.magnitude / control_radius);
+            float target_speed = Mathf.Lerp(0.0f, GetMaxSpeed(), mouse_delta.magnitude / control_radius);
             float power = Mathf.Lerp(max_power, forward_drag * target_speed, velocity_forward.magnitude / target_speed);
             rb.AddForce(power * mouse_delta_normalized);
             animator.SetBool("isSwimming", true);
@@ -108,4 +113,35 @@ public class PlayerMovement : MonoBehaviour
             rb.gravityScale = 0.0f;
         }
     }
+
+    float GetMaxSpeed()
+    {
+        return speed_levels[speed_level].max_speed;
+    }
+
+    public int GetNextUpgradeCost()
+    {
+        if (speed_level+ 1 >= speed_levels.Length)
+        {
+            return -1;
+        }
+        return speed_levels[speed_level + 1].cost;
+    }
+
+    public void Upgrade()
+    {
+        speed_level += 1;
+    }
+
+    public static PlayerMovement Get()
+    {
+        return GameObject.Find("/Player").GetComponent<PlayerMovement>();
+    }
+}
+
+[System.Serializable]
+struct SpeedLevel
+{
+    public int cost;
+    public float max_speed;
 }

@@ -194,6 +194,13 @@ MonoBehaviour:
   control_radius: 3
   forward_drag: 0.1
   normal_drag_factor: 10
+  speed_levels:
+  - cost: 0
+    max_speed: 5
+  - cost: 10
+    max_speed: 7
+  - cost: 20
+    max_speed: 10
 --- !u!70 &4615741743360627261
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
