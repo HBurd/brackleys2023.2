@@ -13,7 +13,19 @@ public class DialogueSystem : MonoBehaviour
     Image image;
 
     [SerializeField]
+    TMP_Text character_name;
+
+    [SerializeField]
     double slide_time = 1.0f;
+
+    [SerializeField]
+    Sprite wally;
+
+    [SerializeField]
+    Sprite parrot;
+
+    [SerializeField]
+    Sprite pirate;
 
     double slide_end_time = 0.0f;
 
@@ -48,13 +60,16 @@ public class DialogueSystem : MonoBehaviour
         }
     }
 
-    public void Open(string new_text, Sprite sprite)
+    public void Open()
     {
+        if (activated)
+        {
+            return;
+        }
+
         gameObject.SetActive(true);
         image.gameObject.SetActive(true);
 
-        image.sprite = sprite;
-        text.text = new_text;
 
         slide_end_time = Time.timeAsDouble + slide_time;
 
@@ -64,18 +79,56 @@ public class DialogueSystem : MonoBehaviour
         panel_tf = GetComponent<RectTransform>();
         panel_offscreen = 300.0f * Vector2.down;
 
-        Debug.Log("open");
-
         image_tf.anchoredPosition = image_offscreen;
         panel_tf.anchoredPosition = panel_offscreen;
 
         activated = true;
     }
 
+    public void Set(DialogueEntry dialogue)
+    {
+        text.text = dialogue.text;
+        Sprite sprite = LookupSprite(dialogue.name);
+        if (sprite != null)
+        {
+            image.sprite = sprite;
+        }
+        character_name.text = dialogue.name;
+    }
+
     public void Close()
     {
-        Debug.Log("close");
         activated = false;
         slide_end_time = Time.timeAsDouble + slide_time;
     }
+
+    public bool IsOpen()
+    {
+        return activated;
+    }
+
+    Sprite LookupSprite(string name)
+    {
+        if (name == "Scook")
+        {
+            return parrot;
+        }
+        else if (name == "Carl")
+        {
+            return pirate;
+        }
+        else if (name == "Wally")
+        {
+            return wally;
+        }
+
+        return null;
+    }
+}
+
+[System.Serializable]
+public struct DialogueEntry
+{
+    public string name;
+    public string text;
 }

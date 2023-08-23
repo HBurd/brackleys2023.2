@@ -7824,8 +7824,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.0003004074, y: 4.74495, z: 0}
-    m_Extent: {x: 24.199501, y: 14.44025, z: 0}
+    m_Center: {x: -0.00014972687, y: 4.7502, z: 0}
+    m_Extent: {x: 24.192451, y: 14.446699, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -44766,6 +44766,18 @@ PrefabInstance:
     - target: {fileID: 3492524036490254513, guid: 8a05ae00ce258c048a5cb97fc743023c, type: 3}
       propertyPath: m_Name
       value: Boat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669613892431916505, guid: 8a05ae00ce258c048a5cb97fc743023c, type: 3}
+      propertyPath: text.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669613892431916505, guid: 8a05ae00ce258c048a5cb97fc743023c, type: 3}
+      propertyPath: text.Array.data[0]
+      value: hello i'm a parrot
+      objectReference: {fileID: 0}
+    - target: {fileID: 8669613892431916505, guid: 8a05ae00ce258c048a5cb97fc743023c, type: 3}
+      propertyPath: text.Array.data[1]
+      value: i hate this pirate guy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

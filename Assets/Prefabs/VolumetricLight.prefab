@@ -95,6 +95,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce384eb7155d0f64e8773d4464b191fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jitter_radius: 0.5
+  jitter_radius: 1
   jitter_time: 20
   root: 0

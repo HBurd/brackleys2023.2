@@ -8,15 +8,26 @@ public class Talkable : MonoBehaviour
     Tooltip tooltip = null;
     bool active = false;
 
-    public delegate void InteractHandler();
+    [SerializeField]
+    TextAsset text_json;
 
-    public event InteractHandler Interact;
+    Dictionary<string, Dialogue> loaded_text = new Dictionary<string, Dialogue>();
+    string current_dialogue;
+    int text_index = 0;
 
     // Start is called before the first frame update
     void Start()
     {
         tooltip = UIGlobals.Get().GetTooltip();
         dialogue = UIGlobals.Get().GetDialogue();
+
+        LoadedText dialogues = JsonUtility.FromJson<LoadedText>(text_json.text);
+
+        current_dialogue = dialogues.start;
+        foreach (Dialogue dialogue in dialogues.dialogue)
+        {
+            loaded_text.Add(dialogue.name, dialogue);
+        }
     }
 
     // Update is called once per frame
@@ -24,7 +35,9 @@ public class Talkable : MonoBehaviour
     {
         if (active && Input.GetMouseButtonDown(1))
         {
-            Interact?.Invoke();
+            dialogue.Open();
+            Interact();
+            tooltip.SetText("RMB to advance");
         }
     }
 
@@ -47,4 +60,33 @@ public class Talkable : MonoBehaviour
             dialogue.Close();
         }
     }
+
+    void Interact()
+    {
+        if (text_index >= loaded_text[current_dialogue].dialogue.Length)
+        {
+            current_dialogue = loaded_text[current_dialogue].next;
+            text_index = 0;
+            dialogue.Close();
+            return;
+        }
+
+        dialogue.Set(loaded_text[current_dialogue].dialogue[text_index]);
+        text_index += 1;
+    }
+}
+
+[System.Serializable]
+public struct Dialogue
+{
+    public string name;
+    public string next;
+    public DialogueEntry[] dialogue;
+}
+
+[System.Serializable]
+public struct LoadedText
+{
+    public string start;
+    public Dialogue[] dialogue;
 }
