@@ -91,9 +91,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6910252808306345362}
-  - component: {fileID: 3808651918022666899}
   - component: {fileID: 7521997327006751356}
   - component: {fileID: 6486264634381847468}
+  - component: {fileID: 8760708880106225852}
+  - component: {fileID: 3808651918022666899}
   - component: {fileID: 4615741743360627261}
   - component: {fileID: 3457181198554110377}
   - component: {fileID: 7048643186948450115}
@@ -120,18 +121,6 @@ Transform:
   - {fileID: 1649883822240523128}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3808651918022666899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5893459832018008293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee0d9c0d910660447a10625edbfd0185, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &7521997327006751356
 Rigidbody2D:
   serializedVersion: 4
@@ -171,11 +160,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 527721cd790e0c84fbf0236b2e85255f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8760708880106225852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893459832018008293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c973d07dfd92da94fb94c918af7c66d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   sonar_rate: 60
-  sonar_angle: 30
+  sonar_angle: 180
   sonar_light: {fileID: 7320595630472809980, guid: 2f1f91635f3100246ad3a335404dcb95, type: 3}
   max_sonar_intensity: 0.1
-  sonar_range: 5
+  sonar_range: 10
+--- !u!114 &3808651918022666899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5893459832018008293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0d9c0d910660447a10625edbfd0185, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!70 &4615741743360627261
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

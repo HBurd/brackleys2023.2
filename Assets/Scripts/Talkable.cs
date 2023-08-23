@@ -6,7 +6,6 @@ public class Talkable : MonoBehaviour
 {
     DialogueSystem dialogue;
     Tooltip tooltip = null;
-    bool active = false;
 
     [SerializeField]
     TextAsset text_json;
@@ -14,6 +13,11 @@ public class Talkable : MonoBehaviour
     Dictionary<string, Dialogue> loaded_text = new Dictionary<string, Dialogue>();
     string current_dialogue;
     int text_index = 0;
+
+    HashSet<string> past_states = new HashSet<string>();
+    List<QueuedText> queued_text = new List<QueuedText>();
+
+    Player player;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +37,7 @@ public class Talkable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (active && Input.GetMouseButtonDown(1))
+        if (player != null && Input.GetMouseButtonDown(1))
         {
             dialogue.Open();
             Interact();
@@ -46,7 +50,7 @@ public class Talkable : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            active = true;
+            player = other.GetComponent<Player>();
             tooltip.SetText("RMB to talk");
         }
     }
@@ -55,38 +59,58 @@ public class Talkable : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            active = false;
+            player = null;
             tooltip.SetText("");
             dialogue.Close();
         }
+    }
+
+    bool PopQueuedText()
+    {
+        if (text_index > 0)
+        {
+            return false;
+        }
+
+        foreach (QueuedText text in queued_text)
+        {
+            if (past_states.Contains(text.after))
+            {
+                current_dialogue = text.name;
+                queued_text.Remove(text);
+                return true;
+            }
+        }
+        return false;
     }
 
     void Interact()
     {
         if (text_index >= loaded_text[current_dialogue].dialogue.Length)
         {
+            past_states.Add(current_dialogue);
             current_dialogue = loaded_text[current_dialogue].next;
             text_index = 0;
-            dialogue.Close();
+            if (!PopQueuedText())
+            {
+                dialogue.Close();
+            }
             return;
         }
 
         dialogue.Set(loaded_text[current_dialogue].dialogue[text_index]);
         text_index += 1;
     }
+
+    public void SayAfter(string name, string after)
+    {
+        queued_text.Add(new QueuedText { name = name, after = after });
+        PopQueuedText();
+    }
 }
 
-[System.Serializable]
-public struct Dialogue
+struct QueuedText
 {
     public string name;
-    public string next;
-    public DialogueEntry[] dialogue;
-}
-
-[System.Serializable]
-public struct LoadedText
-{
-    public string start;
-    public Dialogue[] dialogue;
+    public string after;
 }

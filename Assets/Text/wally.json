@@ -3,7 +3,7 @@
 	"dialogue": [
 		{
 			"name": "intro",
-			"next": "intro",
+			"next": "go_look",
 			"dialogue": [
 				{
 					"name": "Wally",
@@ -11,15 +11,47 @@
 				},
 				{
 					"name": "Wally",
-					"text": "What are you doing here?"
-				},
+					"text": "If you bring me back some metal things I can upgrade your abilities"
+				}
+			]
+		},
+		{
+			"name": "go_look",
+			"next": "go_look",
+			"dialogue": [
 				{
 					"name": "Wally",
-					"text": "Check out my store..."
-				},
+					"text": "Come back to me if you find any weird metal objects"
+				}
+			]
+		},
+		{
+			"name": "find_oxygen",
+			"next": "upgrades",
+			"dialogue": [
 				{
-					"name": "Store",
-					"text": "..."
+					"name": "Wally",
+					"text": "I see you found a derilect scuba diver's tank. I can fix it up for you, in exchange for a few fish..."
+				}
+			]
+		},
+		{
+			"name": "find_flippers",
+			"next": "upgrades",
+			"dialogue": [
+				{
+					"name": "Wally",
+					"text": "I see you found an abandoned pair of scuba flippers. I can fix them up for you, in exchange for a few fish..."
+				}
+			]
+		},
+		{
+			"name": "upgrades",
+			"next": "upgrades",
+			"dialogue": [
+				{
+					"name": "Wally",
+					"text": "Are you interested in any of these upgrades?"
 				}
 			]
 		}
