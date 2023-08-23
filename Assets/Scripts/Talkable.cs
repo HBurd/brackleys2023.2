@@ -6,7 +6,6 @@ public class Talkable : MonoBehaviour
 {
     DialogueSystem dialogue;
     Tooltip tooltip = null;
-    bool active = false;
 
     [SerializeField]
     TextAsset text_json;
@@ -14,6 +13,14 @@ public class Talkable : MonoBehaviour
     Dictionary<string, Dialogue> loaded_text = new Dictionary<string, Dialogue>();
     string current_dialogue;
     int text_index = 0;
+
+    HashSet<string> past_states = new HashSet<string>();
+    List<QueuedText> queued_text = new List<QueuedText>();
+
+    Player player;
+
+    public delegate void StateChangeEventHandler(string new_state);
+    public event StateChangeEventHandler StateChangeEvent;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +40,7 @@ public class Talkable : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (active && Input.GetMouseButtonDown(1))
+        if (player != null && Input.GetMouseButtonDown(1))
         {
             dialogue.Open();
             Interact();
@@ -46,7 +53,7 @@ public class Talkable : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            active = true;
+            player = other.GetComponent<Player>();
             tooltip.SetText("RMB to talk");
         }
     }
@@ -55,38 +62,89 @@ public class Talkable : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            active = false;
+            player = null;
             tooltip.SetText("");
             dialogue.Close();
         }
     }
 
+    bool PopQueuedText()
+    {
+        if (text_index > 0)
+        {
+            return false;
+        }
+
+        bool should_pop = false;
+        QueuedText say_next = new QueuedText { name = "", after = "", priority = -1000 };
+
+        foreach (QueuedText text in queued_text)
+        {
+            if (past_states.Contains(text.after) && text.priority > say_next.priority)
+            {
+                should_pop = true;
+                say_next = text;
+            }
+        }
+
+        if (should_pop)
+        {
+            current_dialogue = say_next.name;
+            queued_text.Remove(say_next);
+            return true;
+        }
+
+        return false;
+    }
+
     void Interact()
     {
+        bool dont_pop = false;
         if (text_index >= loaded_text[current_dialogue].dialogue.Length)
         {
+            past_states.Add(current_dialogue);
             current_dialogue = loaded_text[current_dialogue].next;
             text_index = 0;
-            dialogue.Close();
-            return;
+            if (!PopQueuedText())
+            {
+                dialogue.Close();
+                StateChangeEvent?.Invoke("");
+                return;
+            }
+            // successfully popped, don't pop again
+            dont_pop = true;
+        }
+
+        if (text_index == 0)
+        {
+            if (!dont_pop)
+            {
+                PopQueuedText();
+            }
+            StateChangeEvent?.Invoke(current_dialogue);
         }
 
         dialogue.Set(loaded_text[current_dialogue].dialogue[text_index]);
         text_index += 1;
     }
+
+    public void SayAfter(string name, string after, int priority)
+    {
+        // make sure not to add a duplicate
+        foreach (QueuedText text in queued_text)
+        {
+            if (text.name == name)
+            {
+                return;
+            }
+        }
+        queued_text.Add(new QueuedText { name = name, after = after, priority = priority });
+    }
 }
 
-[System.Serializable]
-public struct Dialogue
+struct QueuedText
 {
     public string name;
-    public string next;
-    public DialogueEntry[] dialogue;
-}
-
-[System.Serializable]
-public struct LoadedText
-{
-    public string start;
-    public Dialogue[] dialogue;
+    public string after;
+    public int priority;
 }

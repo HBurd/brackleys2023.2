@@ -132,3 +132,18 @@ public struct DialogueEntry
     public string name;
     public string text;
 }
+
+[System.Serializable]
+public struct Dialogue
+{
+    public string name;
+    public string next;
+    public DialogueEntry[] dialogue;
+}
+
+[System.Serializable]
+public struct LoadedText
+{
+    public string start;
+    public Dialogue[] dialogue;
+}

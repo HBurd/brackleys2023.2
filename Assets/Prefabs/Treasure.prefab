@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5764748453797646152}
   - component: {fileID: 3027650288681918950}
-  - component: {fileID: 1963683654694730322}
   - component: {fileID: 8875423739401395809}
+  - component: {fileID: 6206082865300214813}
   m_Layer: 0
   m_Name: Treasure
   m_TagString: Untagged
@@ -86,19 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1963683654694730322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2770163498808034176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 761433c721573334e812df3a5db02ca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  magnet_radius: 5
 --- !u!50 &8875423739401395809
 Rigidbody2D:
   serializedVersion: 4
@@ -126,3 +113,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &6206082865300214813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2770163498808034176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 761433c721573334e812df3a5db02ca0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasure_value: 5
