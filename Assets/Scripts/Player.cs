@@ -45,4 +45,9 @@ public class Player : MonoBehaviour
     {
         return GameObject.Find("/Player").GetComponent<Player>();
     }
+
+    public void Upgrade(UpgradeType type)
+    {
+        Debug.Log("Upgrade" + type.ToString());
+    }
 }

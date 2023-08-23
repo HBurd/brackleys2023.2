@@ -189,6 +189,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee0d9c0d910660447a10625edbfd0185, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  max_speed: 10
+  max_power: 5
+  control_radius: 3
+  forward_drag: 0.1
+  normal_drag_factor: 10
 --- !u!70 &4615741743360627261
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
