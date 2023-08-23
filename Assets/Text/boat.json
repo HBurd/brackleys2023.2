@@ -1,16 +1,37 @@
 {
-  "dialogue": [
-    {
-      "name": "Scook",
-      "text": "Hi I'm a parrot"
-    },
-    {
-      "name": "Carl",
-      "text": "ARRRRrrrrrrrrr"
-    },
-    {
-      "name": "Scook",
-      "text": "This idiot thinks he's a pirate"
-    }
-  ]
+	"start": "intro",
+	"dialogue": [
+		{
+			"name": "intro",
+			"next": "after_intro",
+			"dialogue": [
+				{
+					"name": "Scook",
+					"text": "Hi I'm a parrot"
+				},
+				{
+					"name": "Carl",
+					"text": "ARRRRRRRRRRR"
+				},
+				{
+					"name": "Scook",
+					"text": "This idiot thinks he's a pirate"
+				}
+			]
+		},
+		{
+			"name": "after_intro",
+			"next": "after_intro",
+			"dialogue": [
+				{
+					"name": "Scook",
+					"text": "Didn't I just talk to you?"
+				},
+				{
+					"name": "Scook",
+					"text": "Go do something useful"
+				}
+			]
+		}
+	]
 }

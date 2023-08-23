@@ -85,7 +85,7 @@ public class DialogueSystem : MonoBehaviour
         activated = true;
     }
 
-    public void Set(Dialogue dialogue)
+    public void Set(DialogueEntry dialogue)
     {
         text.text = dialogue.text;
         Sprite sprite = LookupSprite(dialogue.name);
@@ -127,7 +127,7 @@ public class DialogueSystem : MonoBehaviour
 }
 
 [System.Serializable]
-public struct Dialogue
+public struct DialogueEntry
 {
     public string name;
     public string text;
