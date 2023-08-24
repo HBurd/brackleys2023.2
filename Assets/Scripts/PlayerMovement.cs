@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
     int speed_level = 0;
     int oxygen_level = 0;
 
-    [SerializeField]
     float current_oxygen = 0.0f;
 
     ProgressBar oxygen_bar = null;
@@ -170,8 +169,6 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isSwimming", false);
         }
-
-        Debug.Log(velocity_forward.magnitude);
 
         rb.AddForce(-forward_drag * velocity_forward);
         rb.AddForce(-forward_drag * normal_drag_factor * velocity_normal);

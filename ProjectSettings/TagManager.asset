@@ -9,6 +9,7 @@ TagManager:
   - VolumetricLight
   - Treasure
   - Water
+  - Barrel
   layers:
   - Default
   - TransparentFX

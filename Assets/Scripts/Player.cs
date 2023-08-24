@@ -60,4 +60,13 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Upgrade" + type.ToString());
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Barrel")
+        {
+            treasure = 0;
+            tooltip.SetText(treasure.ToString());
+        }
+    }
 }
