@@ -22,6 +22,8 @@ public class Talkable : MonoBehaviour
     public delegate void StateChangeEventHandler(string new_state);
     public event StateChangeEventHandler StateChangeEvent;
 
+    string previous = "intro";
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,7 +44,6 @@ public class Talkable : MonoBehaviour
     {
         if (player != null && Input.GetMouseButtonDown(1))
         {
-            dialogue.Open();
             Interact();
             tooltip.SetText("RMB to advance");
         }
@@ -68,6 +69,13 @@ public class Talkable : MonoBehaviour
         }
     }
 
+    void SetState(string new_state)
+    {
+        string old_previous = previous;
+        previous = current_dialogue;
+        current_dialogue = new_state == "previous" ? old_previous : new_state;
+    }
+
     bool PopQueuedText()
     {
         if (text_index > 0)
@@ -89,7 +97,7 @@ public class Talkable : MonoBehaviour
 
         if (should_pop)
         {
-            current_dialogue = say_next.name;
+            SetState(say_next.name);
             queued_text.Remove(say_next);
             return true;
         }
@@ -97,16 +105,19 @@ public class Talkable : MonoBehaviour
         return false;
     }
 
-    void Interact()
+    public void Interact()
     {
+        dialogue.Open();
+
         bool dont_pop = false;
         if (text_index >= loaded_text[current_dialogue].dialogue.Length)
         {
             past_states.Add(current_dialogue);
-            current_dialogue = loaded_text[current_dialogue].next;
+            SetState(loaded_text[current_dialogue].next);
             text_index = 0;
             if (!PopQueuedText())
             {
+                Debug.Log("???");
                 dialogue.Close();
                 StateChangeEvent?.Invoke("");
                 return;

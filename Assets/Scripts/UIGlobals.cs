@@ -20,6 +20,9 @@ public class UIGlobals : MonoBehaviour
     [SerializeField]
     private ProgressBar oxygen;
 
+    [SerializeField]
+    private UnityEngine.UI.Image fade;
+
     public Tooltip GetTooltip()
     {
         return tooltip;
@@ -48,5 +51,10 @@ public class UIGlobals : MonoBehaviour
     public static UIGlobals Get()
     {
         return GameObject.Find("/UI").GetComponent<UIGlobals>();
+    }
+
+    public void SetFade(float value)
+    {
+        fade.color = new Color(0.0f, 0.0f, 0.0f, value);
     }
 }
