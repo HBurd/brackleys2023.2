@@ -8,16 +8,13 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody2D rb = null;
     bool in_water = true;
     bool in_air = false;
-    
+
     Animator animator = null;
 
     SpriteRenderer sprite = null;
 
     UIGlobals ui;
     DialogueSystem dialogue;
-
-    //[SerializeField]
-    //float max_speed = 1.0f;
 
     [SerializeField]
     float max_power = 1.0f;
@@ -34,10 +31,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     SpeedLevel[] speed_levels;
 
+    [SerializeField]
+    OxygenLevel[] oxygen_levels;
+
     int speed_level = 0;
+    int oxygen_level = 0;
 
     [SerializeField]
-    float max_oxygen = 30.0f;
     float current_oxygen = 0.0f;
 
     ProgressBar oxygen_bar = null;
@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
 
         oxygen_bar = ui.GetOxygenBar();
 
-        current_oxygen = max_oxygen;
+        current_oxygen = GetMaxOxygen();
 
         initial_position = transform.position;
     }
@@ -168,7 +168,7 @@ public class PlayerMovement : MonoBehaviour
             Die();
         }
 
-        oxygen_bar.SetValue(current_oxygen / max_oxygen);
+        oxygen_bar.SetValue(current_oxygen / GetMaxOxygen());
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -193,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         {
             in_water = false;
 
-            current_oxygen = max_oxygen;
+            current_oxygen = GetMaxOxygen();
 
             if (can_blow)
             {
@@ -210,18 +210,39 @@ public class PlayerMovement : MonoBehaviour
         return speed_levels[speed_level].max_speed;
     }
 
-    public int GetNextUpgradeCost()
+    float GetMaxOxygen()
     {
-        if (speed_level+ 1 >= speed_levels.Length)
+        return oxygen_levels[oxygen_level].time;
+    }
+
+    public int GetNextSpeedUpgradeCost()
+    {
+        if (speed_level + 1 >= speed_levels.Length)
         {
             return -1;
         }
         return speed_levels[speed_level + 1].cost;
     }
 
-    public void Upgrade()
+    public int GetNextOxygenUpgradeCost()
+    {
+        if (oxygen_level + 1 >= oxygen_levels.Length)
+        {
+            return -1;
+        }
+        return oxygen_levels[oxygen_level + 1].cost;
+    }
+
+    public void UpgradeSpeed()
     {
         speed_level += 1;
+    }
+
+    public void UpgradeOxygen()
+    {
+        oxygen_level += 1;
+
+        current_oxygen = GetMaxOxygen();
     }
 
     public static PlayerMovement Get()
@@ -233,7 +254,7 @@ public class PlayerMovement : MonoBehaviour
     {
         GetComponent<Player>().Die();
         transform.position = initial_position;
-        current_oxygen = max_oxygen;
+        current_oxygen = GetMaxOxygen();
     }
 }
 
@@ -242,4 +263,13 @@ struct SpeedLevel
 {
     public int cost;
     public float max_speed;
+}
+
+[System.Serializable]
+struct OxygenLevel
+{
+    public int cost;
+    public float time;
+    public float depth1;
+    public float depth2;
 }

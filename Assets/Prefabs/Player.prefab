@@ -5029,7 +5029,20 @@ MonoBehaviour:
     max_speed: 7
   - cost: 20
     max_speed: 10
-  max_oxygen: 30
+  oxygen_levels:
+  - cost: 0
+    time: 30
+    depth1: 0
+    depth2: 0
+  - cost: 10
+    time: 45
+    depth1: 0
+    depth2: 0
+  - cost: 20
+    time: 60
+    depth1: 0
+    depth2: 0
+  current_oxygen: 0
   particles: {fileID: 37275238878841316}
 --- !u!70 &4615741743360627261
 CapsuleCollider2D:

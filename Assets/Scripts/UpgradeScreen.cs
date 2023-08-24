@@ -16,9 +16,6 @@ public class UpgradeScreen : MonoBehaviour
     {
         echolocation = Instantiate(upgrade_field, transform.GetChild(0)).GetComponent<Upgrade>();
         echolocation.SetType(UpgradeType.Echolocation);
-
-        PlayerMovement player = PlayerMovement.Get();
-        speed.SetCost(player.GetNextUpgradeCost());
     }
 
     public void EnableOxygenUpgrades()
@@ -30,6 +27,9 @@ public class UpgradeScreen : MonoBehaviour
 
         oxygen = Instantiate(upgrade_field, transform.GetChild(0)).GetComponent<Upgrade>();
         oxygen.SetType(UpgradeType.Oxygen);
+
+        PlayerMovement player = PlayerMovement.Get();
+        oxygen.SetCost(player.GetNextOxygenUpgradeCost());
     }
 
     public void EnableSpeedUpgrades()
@@ -41,6 +41,9 @@ public class UpgradeScreen : MonoBehaviour
 
         speed = Instantiate(upgrade_field, transform.GetChild(0)).GetComponent<Upgrade>();
         speed.SetType(UpgradeType.Speed);
+
+        PlayerMovement player = PlayerMovement.Get();
+        speed.SetCost(player.GetNextSpeedUpgradeCost());
     }
 
     public void HandleUpgrade(UpgradeType type)
@@ -52,25 +55,16 @@ public class UpgradeScreen : MonoBehaviour
         }
         else if (type == UpgradeType.Oxygen)
         {
-            int cost = oxygen.GetCost();
-            oxygen.SetCost(cost + 2);
+            PlayerMovement player = PlayerMovement.Get();
+            player.UpgradeOxygen();
+            oxygen.SetCost(player.GetNextOxygenUpgradeCost());
         }
         else if (type == UpgradeType.Speed)
         {
             PlayerMovement player = PlayerMovement.Get();
-            player.Upgrade();
-            speed.SetCost(player.GetNextUpgradeCost());
+            player.UpgradeSpeed();
+            speed.SetCost(player.GetNextSpeedUpgradeCost());
         }
     }
-}
-
-
-
-struct OxygenLevel
-{
-    public int cost;
-    public float time;
-    public float depth1;
-    public float depth2;
 }
 
