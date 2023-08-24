@@ -99,6 +99,13 @@ public class PlayerMovement : MonoBehaviour
             rb.gravityScale = 0.0f;
         }
 
+        if (!Input.GetButton("Boost"))
+        {
+            current_boost += 0.25f * Time.deltaTime;
+            current_boost = Mathf.Clamp(current_boost, 0.0f, 1.0f);
+            boost_bar.SetValue(current_boost / boost_amount);
+        }
+
         if (!in_water)
         {
             return;
@@ -141,13 +148,6 @@ public class PlayerMovement : MonoBehaviour
 
         Vector2 velocity_forward = Vector2.Dot(rb.velocity, mouse_delta_normalized) * mouse_delta_normalized;
         Vector2 velocity_normal = rb.velocity - velocity_forward;
-
-        if (!Input.GetButton("Boost"))
-        {
-            current_boost += 0.25f * Time.deltaTime;
-            current_boost = Mathf.Clamp(current_boost, 0.0f, 1.0f);
-            boost_bar.SetValue(current_boost / boost_amount);
-        }
 
         if (Input.GetMouseButton(0))
         {
