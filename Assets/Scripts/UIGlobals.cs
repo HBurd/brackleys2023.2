@@ -12,13 +12,19 @@ public class UIGlobals : MonoBehaviour
     private DialogueSystem dialogue;
 
     [SerializeField]
-    private Tooltip treasure;
+    private InventoryCounter treasure;
+
+    [SerializeField]
+    private InventoryCounter fish;
 
     [SerializeField]
     private UpgradeScreen upgrades;
 
     [SerializeField]
     private ProgressBar oxygen;
+
+    [SerializeField]
+    private ProgressBar boost;
 
     [SerializeField]
     private UnityEngine.UI.Image fade;
@@ -33,9 +39,14 @@ public class UIGlobals : MonoBehaviour
         return dialogue;
     }
 
-    public Tooltip GetTreasure()
+    public InventoryCounter GetTreasure()
     {
         return treasure;
+    }
+
+    public InventoryCounter GetFish()
+    {
+        return fish;
     }
 
     public UpgradeScreen GetUpgradeScreen()
@@ -47,6 +58,12 @@ public class UIGlobals : MonoBehaviour
     {
         return oxygen;
     }
+
+    public ProgressBar GetBoostBar()
+    {
+        return boost;
+    }
+
 
     public static UIGlobals Get()
     {

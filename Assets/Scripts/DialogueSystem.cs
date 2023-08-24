@@ -73,9 +73,7 @@ public class DialogueSystem : MonoBehaviour
 
         slide_end_time = Time.timeAsDouble + slide_time;
 
-        Debug.Log("hello");
         image_tf = animator.GetComponent<RectTransform>();
-        Debug.Log("image_tf");
         image_offscreen = 500.0f * Vector2.left;
 
         panel_tf = GetComponent<RectTransform>();
