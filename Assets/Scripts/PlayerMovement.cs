@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody2D rb = null;
     bool in_water = true;
+    bool in_air = false;
     
     Animator animator = null;
 
@@ -33,6 +35,17 @@ public class PlayerMovement : MonoBehaviour
 
     int speed_level = 0;
 
+    [SerializeField]
+    float max_oxygen = 30.0f;
+    float current_oxygen = 0.0f;
+
+    ProgressBar oxygen_bar = null;
+
+    bool can_blow = true;
+
+    [SerializeField]
+    Transform particles;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,11 +53,35 @@ public class PlayerMovement : MonoBehaviour
         sprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         dialogue = UIGlobals.Get().GetDialogue();
+
+        oxygen_bar = UIGlobals.Get().GetOxygenBar();
+
+        current_oxygen = max_oxygen;
     }
 
     // Update is called once per frame
     void Update()
     {
+        UpdateSwimming();
+        UpdateOxygen();
+    }
+
+    void UpdateSwimming()
+    {
+        if (in_air && !in_water)
+        {
+            rb.gravityScale = 1.0f;
+        }
+        else if (in_air)
+        {
+            rb.gravityScale = 0.5f;
+        }
+        else
+        {
+            can_blow = true;
+            rb.gravityScale = 0.0f;
+        }
+
         if (!in_water)
         {
             return;
@@ -72,6 +109,15 @@ public class PlayerMovement : MonoBehaviour
 
         sprite.flipY = angle > 0.5f * Mathf.PI || angle < -0.5f * Mathf.PI;
 
+        if (sprite.flipY)
+        {
+            particles.localRotation = Quaternion.AngleAxis(90.0f, Vector3.right);
+        }
+        else
+        {
+            particles.localRotation = Quaternion.AngleAxis(-90.0f, Vector3.right);
+        }
+
         Vector3 mouse_delta_normalized = mouse_delta.normalized;
 
         transform.rotation = Quaternion.AngleAxis(angle * 180.0f / Mathf.PI, Vector3.forward);
@@ -79,15 +125,14 @@ public class PlayerMovement : MonoBehaviour
         Vector2 velocity_forward = Vector2.Dot(rb.velocity, mouse_delta_normalized) * mouse_delta_normalized;
         Vector2 velocity_normal = rb.velocity - velocity_forward;
 
-        Debug.Log(velocity_forward.magnitude);
-
         if (Input.GetMouseButton(0))
         {
             float target_speed = Mathf.Lerp(0.0f, GetMaxSpeed(), mouse_delta.magnitude / control_radius);
             float power = Mathf.Lerp(max_power, forward_drag * target_speed, velocity_forward.magnitude / target_speed);
             rb.AddForce(power * mouse_delta_normalized);
             animator.SetBool("isSwimming", true);
-        } else 
+        }
+        else
         {
             animator.SetBool("isSwimming", false);
         }
@@ -96,12 +141,21 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(-forward_drag * normal_drag_factor * velocity_normal);
     }
 
+    void UpdateOxygen()
+    {
+        oxygen_bar.SetValue(current_oxygen / max_oxygen);
+        current_oxygen -= Time.deltaTime;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Sky")
         {
-            in_water = false;
-            rb.gravityScale = 1.0f;
+            in_air = true;
+        }
+        else if (other.tag == "Water")
+        {
+            in_water = true;
         }
     }
 
@@ -109,8 +163,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.tag == "Sky")
         {
-            in_water = true;
-            rb.gravityScale = 0.0f;
+            in_air = false;
+        }
+        else if (other.tag == "Water")
+        {
+            in_water = false;
+
+            current_oxygen = max_oxygen;
+
+            if (can_blow)
+            {
+                can_blow = false;
+                ParticleSystem particle_system = particles.gameObject.GetComponent<ParticleSystem>();
+                particle_system.time = 0.0f;
+                particle_system.Play();
+            }
         }
     }
 
