@@ -12,7 +12,10 @@ public class UIGlobals : MonoBehaviour
     private DialogueSystem dialogue;
 
     [SerializeField]
-    private Tooltip treasure;
+    private InventoryCounter treasure;
+
+    [SerializeField]
+    private InventoryCounter fish;
 
     [SerializeField]
     private UpgradeScreen upgrades;
@@ -36,9 +39,14 @@ public class UIGlobals : MonoBehaviour
         return dialogue;
     }
 
-    public Tooltip GetTreasure()
+    public InventoryCounter GetTreasure()
     {
         return treasure;
+    }
+
+    public InventoryCounter GetFish()
+    {
+        return fish;
     }
 
     public UpgradeScreen GetUpgradeScreen()

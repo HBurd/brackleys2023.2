@@ -9,7 +9,8 @@ public class Player : MonoBehaviour
     bool have_oxygen = false;
     bool have_flippers = false;
 
-    Tooltip tooltip = null;
+    InventoryCounter treasure_display = null;
+    InventoryCounter fish_display = null;
 
 
     public delegate void ItemEventHandler(ItemType type, int count);
@@ -21,7 +22,8 @@ public class Player : MonoBehaviour
     void Start()
     {
         UIGlobals ui = UIGlobals.Get();
-        tooltip = ui.GetTreasure();
+        treasure_display = ui.GetTreasure();
+        fish_display = ui.GetFish();
     }
 
     public void GiveItem(ItemType type, int count)
@@ -41,7 +43,9 @@ public class Player : MonoBehaviour
                 have_flippers = true;
                 break;
         }
-        tooltip.SetText(treasure.ToString());
+        treasure_display.SetValue(treasure);
+        fish_display.SetValue(fish);
+
 
         ItemEvent?.Invoke(type, count);
     }
@@ -65,8 +69,7 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Barrel")
         {
-            treasure = 0;
-            tooltip.SetText(treasure.ToString());
+            GiveItem(ItemType.Treasure, -treasure);
         }
     }
 }

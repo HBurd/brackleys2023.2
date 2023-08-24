@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 37275238878841316}
   - component: {fileID: 4795744656138651826}
   - component: {fileID: 3879225067050662994}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Particle System (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4838,7 +4838,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1649883822240523128}
   - component: {fileID: 8117596397893478054}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4926,7 +4926,7 @@ GameObject:
   - component: {fileID: 4615741743360627261}
   - component: {fileID: 3457181198554110377}
   - component: {fileID: 7048643186948450115}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
