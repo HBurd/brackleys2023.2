@@ -21,6 +21,7 @@ public class VolumetricLightManager : MonoBehaviour
             if (light.root)
             {
                 light.last_pass = light.GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity;
+                light.intensity = light.last_pass;
             }
         }
 
@@ -28,8 +29,10 @@ public class VolumetricLightManager : MonoBehaviour
         {
             foreach (VolumetricLight light in lights)
             {
-                //float radius = light.GetComponent<UnityEngine.Rendering.Universal.Light2D>().pointLightOuterRadius;
-                //Collider2D[] neighbours = Physics2D.OverlapCircleAll(light.transform.position, radius, LayerMask.NameToLayer("VolumetricLight"), -1000.0f, 1000.0f);
+                if (light.intensity > 0.0f)
+                {
+                    continue;
+                }
 
                 List<VolumetricLight> neighbours = GetNeighbours(light, lights);
 
@@ -37,32 +40,16 @@ public class VolumetricLightManager : MonoBehaviour
 
                 foreach (VolumetricLight other in neighbours)
                 {
-                    if (other.root)
-                    {
-                        continue;
-                    }
-
                     float distance = (other.transform.position - light.transform.position).magnitude;
                     float t = Mathf.Clamp(distance / radius, 0.0f, 1.0f);
-                    other.next_pass += Mathf.Lerp(light.last_pass, 0, 2 * t - t * t);
+                    light.last_pass = Mathf.Max(light.last_pass, Mathf.Lerp(other.intensity, 0, t*t));
                 }
             }
 
             foreach (VolumetricLight light in lights)
             {
-                light.intensity += light.last_pass;
-                light.next_pass = Mathf.Clamp(light.next_pass, 0.0f, 1.0f - light.intensity);
-                light.last_pass = light.next_pass;
-                light.next_pass = 0.0f;
+                light.intensity = light.last_pass;
             }
-        }
-
-        foreach (VolumetricLight light in lights)
-        {
-            light.intensity += light.last_pass;
-            light.intensity = Mathf.Clamp(light.intensity, 0.0f, 1.0f);
-            light.last_pass = light.next_pass;
-            light.next_pass = 0.0f;
         }
 
         GameObject.Find("Sky/Global Light").GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity = 0.0f;
