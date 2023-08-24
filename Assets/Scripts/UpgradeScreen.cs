@@ -16,6 +16,9 @@ public class UpgradeScreen : MonoBehaviour
     {
         echolocation = Instantiate(upgrade_field, transform.GetChild(0)).GetComponent<Upgrade>();
         echolocation.SetType(UpgradeType.Echolocation);
+
+        PlayerMovement player = PlayerMovement.Get();
+        speed.SetCost(player.GetNextUpgradeCost());
     }
 
     public void EnableOxygenUpgrades()
@@ -54,8 +57,20 @@ public class UpgradeScreen : MonoBehaviour
         }
         else if (type == UpgradeType.Speed)
         {
-            int cost = speed.GetCost();
-            speed.SetCost(cost + 2);
+            PlayerMovement player = PlayerMovement.Get();
+            player.Upgrade();
+            speed.SetCost(player.GetNextUpgradeCost());
         }
     }
 }
+
+
+
+struct OxygenLevel
+{
+    public int cost;
+    public float time;
+    public float depth1;
+    public float depth2;
+}
+

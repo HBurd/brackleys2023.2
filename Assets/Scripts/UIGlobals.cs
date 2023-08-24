@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class UIGlobals : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class UIGlobals : MonoBehaviour
 
     [SerializeField]
     private UpgradeScreen upgrades;
+
+    [SerializeField]
+    private ProgressBar oxygen;
 
     public Tooltip GetTooltip()
     {
@@ -34,6 +38,11 @@ public class UIGlobals : MonoBehaviour
     public UpgradeScreen GetUpgradeScreen()
     {
         return upgrades;
+    }
+
+    public ProgressBar GetOxygenBar()
+    {
+        return oxygen;
     }
 
     public static UIGlobals Get()

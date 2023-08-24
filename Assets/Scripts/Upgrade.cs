@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Upgrade : MonoBehaviour
 {
@@ -39,8 +40,15 @@ public class Upgrade : MonoBehaviour
 
     public void SetCost(int new_cost)
     {
-        cost = new_cost;
-        cost_text.text = cost.ToString();
+        if (new_cost < 0)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            cost = new_cost;
+            cost_text.text = cost.ToString();
+        }
     }
 }
 

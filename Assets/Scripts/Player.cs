@@ -11,12 +11,14 @@ public class Player : MonoBehaviour
 
     Tooltip tooltip = null;
 
+
     public delegate void ItemEventHandler(ItemType type, int count);
     public event ItemEventHandler ItemEvent;
 
     void Start()
     {
-        tooltip = UIGlobals.Get().GetTreasure();
+        UIGlobals ui = UIGlobals.Get();
+        tooltip = ui.GetTreasure();
     }
 
     public void GiveItem(ItemType type, int count)

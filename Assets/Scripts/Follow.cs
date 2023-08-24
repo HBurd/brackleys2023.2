@@ -9,6 +9,8 @@ public class Follow : MonoBehaviour
     public bool constrain_x = false;
     public bool constrain_y = false;
 
+    public bool follow_rotation = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +25,10 @@ public class Follow : MonoBehaviour
             constrain_y ? transform.position.y : target.position.y,
             transform.position.z);
         transform.position = target_pos;
+
+        if (follow_rotation)
+        {
+            transform.rotation = target.rotation;
+        }
     }
 }
