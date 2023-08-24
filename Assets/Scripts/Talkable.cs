@@ -116,7 +116,6 @@ public class Talkable : MonoBehaviour
             text_index = 0;
             if (!PopQueuedText())
             {
-                Debug.Log("???");
                 dialogue.Close();
                 StateChangeEvent?.Invoke("");
                 return;

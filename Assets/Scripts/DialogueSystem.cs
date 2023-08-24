@@ -10,7 +10,7 @@ public class DialogueSystem : MonoBehaviour
     TMP_Text text;
 
     [SerializeField]
-    Image image;
+    Animator animator;
 
     [SerializeField]
     TMP_Text character_name;
@@ -19,13 +19,13 @@ public class DialogueSystem : MonoBehaviour
     double slide_time = 1.0f;
 
     [SerializeField]
-    Sprite wally;
+    RuntimeAnimatorController wally;
 
     [SerializeField]
-    Sprite parrot;
+    RuntimeAnimatorController parrot;
 
     [SerializeField]
-    Sprite pirate;
+    RuntimeAnimatorController pirate;
 
     double slide_end_time = 0.0f;
 
@@ -55,7 +55,7 @@ public class DialogueSystem : MonoBehaviour
             if (t > 1.0f)
             {
                 gameObject.SetActive(false);
-                image.gameObject.SetActive(false);
+                animator.gameObject.SetActive(false);
             }
         }
     }
@@ -68,12 +68,14 @@ public class DialogueSystem : MonoBehaviour
         }
 
         gameObject.SetActive(true);
-        image.gameObject.SetActive(true);
+        animator.gameObject.SetActive(true);
 
 
         slide_end_time = Time.timeAsDouble + slide_time;
 
-        image_tf = image.GetComponent<RectTransform>();
+        Debug.Log("hello");
+        image_tf = animator.GetComponent<RectTransform>();
+        Debug.Log("image_tf");
         image_offscreen = 500.0f * Vector2.left;
 
         panel_tf = GetComponent<RectTransform>();
@@ -88,10 +90,10 @@ public class DialogueSystem : MonoBehaviour
     public void Set(DialogueEntry dialogue)
     {
         text.text = dialogue.text;
-        Sprite sprite = LookupSprite(dialogue.name);
-        if (sprite != null)
+        RuntimeAnimatorController anim = LookupAnimation(dialogue.name);
+        if (anim != null)
         {
-            image.sprite = sprite;
+            animator.runtimeAnimatorController = anim;
         }
         character_name.text = dialogue.name;
     }
@@ -107,7 +109,7 @@ public class DialogueSystem : MonoBehaviour
         return activated;
     }
 
-    Sprite LookupSprite(string name)
+    RuntimeAnimatorController LookupAnimation(string name)
     {
         if (name == "Scook")
         {
