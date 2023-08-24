@@ -65,7 +65,6 @@ public class Talkable : MonoBehaviour
         {
             player = null;
             tooltip.SetText("");
-            dialogue.Close();
         }
     }
 
