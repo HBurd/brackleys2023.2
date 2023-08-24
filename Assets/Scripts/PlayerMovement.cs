@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
 
     SpriteRenderer sprite = null;
 
+    UIGlobals ui;
     DialogueSystem dialogue;
 
     //[SerializeField]
@@ -46,17 +47,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     Transform particles;
 
+    Vector3 initial_position;
+
     // Start is called before the first frame update
     void Start()
     {
+        ui = UIGlobals.Get();
         animator = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
-        dialogue = UIGlobals.Get().GetDialogue();
+        dialogue = ui.GetDialogue();
 
-        oxygen_bar = UIGlobals.Get().GetOxygenBar();
+        oxygen_bar = ui.GetOxygenBar();
 
         current_oxygen = max_oxygen;
+
+        initial_position = transform.position;
     }
 
     // Update is called once per frame
@@ -143,8 +149,26 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateOxygen()
     {
+        if (!dialogue.IsOpen())
+        {
+            current_oxygen -= Time.deltaTime;
+        }
+
+        if (current_oxygen < 10.0f)
+        {
+            ui.SetFade(Mathf.Clamp(1.0f - current_oxygen / 10.0f, 0.0f, 1.0f));
+        }
+        else
+        {
+            ui.SetFade(0.0f);
+        }
+
+        if (current_oxygen <= 0.0f)
+        {
+            Die();
+        }
+
         oxygen_bar.SetValue(current_oxygen / max_oxygen);
-        current_oxygen -= Time.deltaTime;
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -203,6 +227,13 @@ public class PlayerMovement : MonoBehaviour
     public static PlayerMovement Get()
     {
         return GameObject.Find("/Player").GetComponent<PlayerMovement>();
+    }
+
+    void Die()
+    {
+        GetComponent<Player>().Die();
+        transform.position = initial_position;
+        current_oxygen = max_oxygen;
     }
 }
 

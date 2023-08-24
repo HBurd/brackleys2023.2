@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     public delegate void ItemEventHandler(ItemType type, int count);
     public event ItemEventHandler ItemEvent;
 
+    public delegate void DieEventHandler();
+    public event DieEventHandler DieEvent;
+
     void Start()
     {
         UIGlobals ui = UIGlobals.Get();
@@ -41,6 +44,11 @@ public class Player : MonoBehaviour
         tooltip.SetText(treasure.ToString());
 
         ItemEvent?.Invoke(type, count);
+    }
+
+    public void Die()
+    {
+        DieEvent?.Invoke();
     }
 
     public static Player Get()

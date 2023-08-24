@@ -32,6 +32,24 @@
 					"text": "Go do something useful"
 				}
 			]
+		},
+		{
+			"name": "died",
+			"next": "previous",
+			"dialogue": [
+				{
+					"name": "Carl",
+					"text": "Ye be standin' on the brink of Davey Jone's Locker, ye Scallywag!!! Shiver me timbers!!!! "
+				},
+				{
+					"name": "Scook",
+					"text": "Carl, you sound like a complete idiot."
+				},
+				{
+					"name": "Scook",
+					"text": "But seriously, be careful. I had to feed you some fish to revive you."
+				}
+			]
 		}
 	]
 }
