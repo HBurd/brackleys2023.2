@@ -41,8 +41,17 @@ public class PlayerMovement : MonoBehaviour
     float current_oxygen = 0.0f;
 
     ProgressBar oxygen_bar = null;
+    ProgressBar boost_bar = null;
 
     bool can_blow = true;
+
+    [SerializeField]
+    float boost_amount = 1.0f;
+
+    [SerializeField]
+    float boost_factor = 2.0f;
+
+    float current_boost = 1.0f;
 
     [SerializeField]
     Transform particles;
@@ -59,10 +68,13 @@ public class PlayerMovement : MonoBehaviour
         dialogue = ui.GetDialogue();
 
         oxygen_bar = ui.GetOxygenBar();
+        boost_bar = ui.GetBoostBar();
 
         current_oxygen = GetMaxOxygen();
 
         initial_position = transform.position;
+
+        current_boost = boost_amount;
     }
 
     // Update is called once per frame
@@ -131,10 +143,26 @@ public class PlayerMovement : MonoBehaviour
         Vector2 velocity_forward = Vector2.Dot(rb.velocity, mouse_delta_normalized) * mouse_delta_normalized;
         Vector2 velocity_normal = rb.velocity - velocity_forward;
 
+        if (!Input.GetButton("Boost"))
+        {
+            current_boost += 0.25f * Time.deltaTime;
+            current_boost = Mathf.Clamp(current_boost, 0.0f, 1.0f);
+            boost_bar.SetValue(current_boost / boost_amount);
+        }
+
         if (Input.GetMouseButton(0))
         {
-            float target_speed = Mathf.Lerp(0.0f, GetMaxSpeed(), mouse_delta.magnitude / control_radius);
-            float power = Mathf.Lerp(max_power, forward_drag * target_speed, velocity_forward.magnitude / target_speed);
+            float current_boost_factor = 1.0f;
+            if (Input.GetButton("Boost") && current_boost > 0.0f)
+            {
+                current_boost_factor = boost_factor;
+                current_boost -= Time.deltaTime;
+                current_boost = Mathf.Clamp(current_boost, 0.0f, 1.0f);
+                boost_bar.SetValue(current_boost / boost_amount);
+            }
+
+            float target_speed = Mathf.Lerp(0.0f, current_boost_factor * GetMaxSpeed(), mouse_delta.magnitude / control_radius);
+            float power = Mathf.Lerp(current_boost_factor * max_power, forward_drag * target_speed, velocity_forward.magnitude / target_speed);
             rb.AddForce(power * mouse_delta_normalized);
             animator.SetBool("isSwimming", true);
         }
@@ -142,6 +170,8 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isSwimming", false);
         }
+
+        Debug.Log(velocity_forward.magnitude);
 
         rb.AddForce(-forward_drag * velocity_forward);
         rb.AddForce(-forward_drag * normal_drag_factor * velocity_normal);
@@ -255,6 +285,7 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<Player>().Die();
         transform.position = initial_position;
         current_oxygen = GetMaxOxygen();
+        current_boost = boost_amount;
     }
 }
 

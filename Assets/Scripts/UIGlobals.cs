@@ -21,6 +21,9 @@ public class UIGlobals : MonoBehaviour
     private ProgressBar oxygen;
 
     [SerializeField]
+    private ProgressBar boost;
+
+    [SerializeField]
     private UnityEngine.UI.Image fade;
 
     public Tooltip GetTooltip()
@@ -47,6 +50,12 @@ public class UIGlobals : MonoBehaviour
     {
         return oxygen;
     }
+
+    public ProgressBar GetBoostBar()
+    {
+        return boost;
+    }
+
 
     public static UIGlobals Get()
     {
