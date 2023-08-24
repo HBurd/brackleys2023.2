@@ -5001,11 +5001,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c973d07dfd92da94fb94c918af7c66d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sonar_rate: 60
   sonar_angle: 180
   sonar_light: {fileID: 7320595630472809980, guid: 2f1f91635f3100246ad3a335404dcb95, type: 3}
   max_sonar_intensity: 0.1
   sonar_range: 10
+  echolocation_levels:
+  - cost: 0
+    time: 1
+    rate: 20
+  - cost: 20
+    time: 1.5
+    rate: 45
+  - cost: 40
+    time: 2
+    rate: 60
 --- !u!114 &3808651918022666899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5029,7 +5038,20 @@ MonoBehaviour:
     max_speed: 7
   - cost: 20
     max_speed: 10
-  max_oxygen: 30
+  oxygen_levels:
+  - cost: 0
+    time: 30
+    depth1: 0
+    depth2: 0
+  - cost: 10
+    time: 45
+    depth1: 0
+    depth2: 0
+  - cost: 20
+    time: 60
+    depth1: 0
+    depth2: 0
+  current_oxygen: 0
   particles: {fileID: 37275238878841316}
 --- !u!70 &4615741743360627261
 CapsuleCollider2D:

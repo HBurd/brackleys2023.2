@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Echolocation : MonoBehaviour
 {
-    [SerializeField]
-    float sonar_rate = 1.0f;
 
     [SerializeField]
     float sonar_angle = 20.0f;
@@ -21,6 +19,11 @@ public class Echolocation : MonoBehaviour
     [SerializeField]
     float sonar_range = 10.0f;
 
+    [SerializeField]
+    EcholocationLevel[] echolocation_levels;
+
+    int echolocation_level = 0;
+
     // Update is called once per frame
     void Update()
     {
@@ -35,10 +38,37 @@ public class Echolocation : MonoBehaviour
             if (hit.collider != null)
             {
                 GameObject light = Instantiate(sonar_light, hit.point, Quaternion.identity);
-                light.GetComponent<KillAfter>().initial_intensity = max_sonar_intensity * (1.0f - hit.distance / sonar_range);
+                light.GetComponent<EchoLight>().initial_intensity = max_sonar_intensity * (1.0f - hit.distance / sonar_range);
+                light.GetComponent<EchoLight>().timeout = echolocation_levels[echolocation_level].time;
             }
 
-            next_ping_time = Time.timeAsDouble + 1.0f / sonar_rate;
+            next_ping_time = Time.timeAsDouble + 1.0f / echolocation_levels[echolocation_level].rate;
         }
     }
+
+    public int GetNextUpgradeCost()
+    {
+        if (echolocation_level + 1 >= echolocation_levels.Length)
+        {
+            return -1;
+        }
+        return echolocation_levels[echolocation_level + 1].cost;
+    }
+
+    public void Upgrade()
+    {
+        if (echolocation_level == echolocation_levels.Length - 1)
+        {
+            return;
+        }
+        echolocation_level += 1;
+    }
+}
+
+[System.Serializable]
+struct EcholocationLevel
+{
+    public int cost;
+    public float time;
+    public float rate;
 }

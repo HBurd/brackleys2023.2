@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class KillAfter : MonoBehaviour
+public class EchoLight: MonoBehaviour
 {
     public double timeout = 1.0;
 
