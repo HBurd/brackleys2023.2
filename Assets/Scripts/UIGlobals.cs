@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using TMPro;
 
 public class UIGlobals : MonoBehaviour
 {
@@ -25,6 +26,11 @@ public class UIGlobals : MonoBehaviour
 
     [SerializeField]
     private ProgressBar boost;
+
+    [SerializeField]
+    private ProgressBar depth;
+    [SerializeField]
+    TMP_Text depth_label;
 
     [SerializeField]
     private UnityEngine.UI.Image fade;
@@ -62,6 +68,19 @@ public class UIGlobals : MonoBehaviour
     public ProgressBar GetBoostBar()
     {
         return boost;
+    }
+
+    public void SetDepth(float current_depth, float max_depth)
+    {
+        if (current_depth < 0.0f)
+        {
+            current_depth = 0.0f;
+        }
+
+        float t = current_depth / max_depth;
+
+        depth.SetValue(t);
+        depth_label.text = Mathf.Round(current_depth).ToString() + "m";
     }
 
 

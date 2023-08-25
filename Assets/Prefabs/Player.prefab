@@ -5041,16 +5041,16 @@ MonoBehaviour:
   oxygen_levels:
   - cost: 0
     time: 30
-    depth1: 0
-    depth2: 0
+    max_depth: 40
+    threshold_deplete_factor: 3
   - cost: 10
     time: 45
-    depth1: 0
-    depth2: 0
+    max_depth: 60
+    threshold_deplete_factor: 3
   - cost: 20
     time: 60
-    depth1: 0
-    depth2: 0
+    max_depth: 90
+    threshold_deplete_factor: 3
   boost_amount: 1
   boost_factor: 2
   particles: {fileID: 37275238878841316}

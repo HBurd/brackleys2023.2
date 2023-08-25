@@ -6,12 +6,12 @@ public class ProgressBar : MonoBehaviour
 {
     UnityEngine.UI.Image bar;
 
-    void Start()
+    virtual protected void Start()
     {
         bar = transform.GetChild(0).GetComponent<UnityEngine.UI.Image>();
     }
 
-    public void SetValue(float value)
+    public virtual void SetValue(float value)
     {
         bar.fillAmount = value;
     }

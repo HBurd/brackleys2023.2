@@ -176,9 +176,16 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateOxygen()
     {
+        ui.SetDepth(-transform.position.y, oxygen_levels[oxygen_level].max_depth);
+
         if (!dialogue.IsOpen())
         {
-            current_oxygen -= Time.deltaTime;
+            float oxygen_deplete_factor = 1.0f;
+            if (-transform.position.y > oxygen_levels[oxygen_level].max_depth)
+            {
+                oxygen_deplete_factor = oxygen_levels[oxygen_level].threshold_deplete_factor;
+            }
+            current_oxygen -= oxygen_deplete_factor * Time.deltaTime;
         }
 
         if (current_oxygen < 10.0f)
@@ -268,7 +275,6 @@ public class PlayerMovement : MonoBehaviour
     public void UpgradeOxygen()
     {
         oxygen_level += 1;
-
         current_oxygen = GetMaxOxygen();
     }
 
@@ -298,6 +304,6 @@ struct OxygenLevel
 {
     public int cost;
     public float time;
-    public float depth1;
-    public float depth2;
+    public float max_depth;
+    public float threshold_deplete_factor;
 }
