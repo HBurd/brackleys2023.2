@@ -6,13 +6,13 @@ public class Player : MonoBehaviour
 {
     int treasure = 0;
     int fish = 0;
-    bool have_oxygen = false;
-    bool have_flippers = false;
 
     InventoryCounter treasure_display = null;
     InventoryCounter fish_display = null;
 
     Ship ship;
+
+    UIGlobals ui;
 
 
     public delegate void ItemEventHandler(ItemType type, int count);
@@ -23,11 +23,15 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        UIGlobals ui = UIGlobals.Get();
+        ui = UIGlobals.Get();
         treasure_display = ui.GetTreasure();
         fish_display = ui.GetFish();
 
         ship = GameObject.Find("/Boat").GetComponent<Ship>();
+
+        // setting negative just hides fully
+        ui.SetOxygenUpgradeLevel(-1);
+        ui.SetSpeedUpgradeLevel(-1);
     }
 
     public void GiveItem(ItemType type, int count)
@@ -41,10 +45,10 @@ public class Player : MonoBehaviour
                 fish += count;
                 break;
             case ItemType.OxygenTank:
-                have_oxygen = true;
+                ui.SetOxygenUpgradeLevel(0);
                 break;
             case ItemType.Flippers:
-                have_flippers = true;
+                ui.SetSpeedUpgradeLevel(0);
                 break;
         }
         treasure_display.SetValue(treasure);

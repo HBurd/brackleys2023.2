@@ -269,12 +269,23 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpgradeSpeed()
     {
+        if (speed_level == speed_levels.Length - 1)
+        {
+            return;
+        }
+
         speed_level += 1;
+        ui.SetSpeedUpgradeLevel(speed_level);
     }
 
     public void UpgradeOxygen()
     {
+        if (oxygen_level == oxygen_levels.Length - 1)
+        {
+            return;
+        }
         oxygen_level += 1;
+        ui.SetOxygenUpgradeLevel(oxygen_level);
         current_oxygen = GetMaxOxygen();
     }
 

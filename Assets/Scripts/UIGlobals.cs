@@ -35,6 +35,15 @@ public class UIGlobals : MonoBehaviour
     [SerializeField]
     private UnityEngine.UI.Image fade;
 
+    [SerializeField]
+    private InventoryCounter echolocation_level;
+
+    [SerializeField]
+    private InventoryCounter oxygen_level;
+
+    [SerializeField]
+    private InventoryCounter speed_level;
+
     public Tooltip GetTooltip()
     {
         return tooltip;
@@ -70,6 +79,20 @@ public class UIGlobals : MonoBehaviour
         return boost;
     }
 
+    public void SetEcholocationUpgradeLevel(int level)
+    {
+        echolocation_level.SetValue(level + 1);
+    }
+
+    public void SetOxygenUpgradeLevel(int level)
+    {
+        oxygen_level.SetValue(level + 1);
+    }
+    public void SetSpeedUpgradeLevel(int level)
+    {
+        speed_level.SetValue(level + 1);
+    }
+
     public void SetDepth(float current_depth, float max_depth)
     {
         if (current_depth < 0.0f)
@@ -80,7 +103,7 @@ public class UIGlobals : MonoBehaviour
         float t = current_depth / max_depth;
 
         depth.SetValue(t);
-        depth_label.text = Mathf.Round(current_depth).ToString() + "m";
+        depth_label.text = "Depth: " + Mathf.Round(current_depth).ToString() + "m";
     }
 
 
