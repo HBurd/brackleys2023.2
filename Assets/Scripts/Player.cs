@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
     InventoryCounter treasure_display = null;
     InventoryCounter fish_display = null;
 
+    Ship ship;
+
 
     public delegate void ItemEventHandler(ItemType type, int count);
     public event ItemEventHandler ItemEvent;
@@ -24,6 +26,8 @@ public class Player : MonoBehaviour
         UIGlobals ui = UIGlobals.Get();
         treasure_display = ui.GetTreasure();
         fish_display = ui.GetFish();
+
+        ship = GameObject.Find("/Boat").GetComponent<Ship>();
     }
 
     public void GiveItem(ItemType type, int count)
@@ -69,6 +73,7 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Barrel")
         {
+            ship.SpawnFish(treasure);
             GiveItem(ItemType.Treasure, -treasure);
         }
     }
