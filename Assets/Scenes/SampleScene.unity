@@ -7817,8 +7817,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.004149437, y: 4.7541, z: 0}
-    m_Extent: {x: 24.191349, y: 14.44, z: 0}
+    m_Center: {x: -0.0051002502, y: 4.7497506, z: 0}
+    m_Extent: {x: 24.1917, y: 14.441151, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -44897,6 +44897,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 767043543572867213, guid: aff3eaa4f6a3d5541b13c6b03a9467ed, type: 3}
+      propertyPath: count
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2370477657438203764, guid: aff3eaa4f6a3d5541b13c6b03a9467ed, type: 3}
       propertyPath: m_Name
       value: fish2

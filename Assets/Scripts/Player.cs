@@ -72,4 +72,9 @@ public class Player : MonoBehaviour
             GiveItem(ItemType.Treasure, -treasure);
         }
     }
+
+    public int GetFish()
+    {
+        return fish;
+    }
 }
