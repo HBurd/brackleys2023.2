@@ -6,7 +6,7 @@ using TMPro;
 public class InventoryCounter : MonoBehaviour
 {
     [SerializeField]
-    TMP_Text text;    
+    TMP_Text text;
 
     // Start is called before the first frame update
     void Start()

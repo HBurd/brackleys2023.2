@@ -24,6 +24,11 @@ public class Echolocation : MonoBehaviour
 
     int echolocation_level = 0;
 
+    void Start()
+    {
+        UIGlobals.Get().SetEcholocationUpgradeLevel(0);
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -62,6 +67,7 @@ public class Echolocation : MonoBehaviour
             return;
         }
         echolocation_level += 1;
+        UIGlobals.Get().SetEcholocationUpgradeLevel(echolocation_level);
     }
 }
 

@@ -10,12 +10,17 @@ public class FishWander : MonoBehaviour
     Vector3 initial_position;
 
     float t = 0.0f;
+    float perlin_x = 0.0f;
+    float perlin_y = 0.0f;
 
     // Start is called before the first frame update
     void Start()
     {
         sprite = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+
+        perlin_x = Random.Range(-1000.0f, 1000.0f);
+        perlin_y = Random.Range(-1000.0f, 1000.0f);
     }
 
     // Update is called once per frame
@@ -30,11 +35,19 @@ public class FishWander : MonoBehaviour
             sprite.flipX = true;
         }
 
-        t += 0.2f * Time.deltaTime;
+        t += 0.1f * Time.deltaTime;
 
-        float random1 = Mathf.PerlinNoise1D(t) - 0.5f;
-        float random2 = Mathf.PerlinNoise1D(t + 20.0f) - 0.5f;
+        if (t > 2.0f * Mathf.PI)
+        {
+            t -= 2.0f * Mathf.PI;
+        }
 
-        rb.velocity = 2.0f * random1 * Vector2.right + 0.8f * random2 * Vector2.up;
+        float sample_x = perlin_x + 5.0f * Mathf.Cos(t);
+        float sample_y = perlin_y + 5.0f * Mathf.Sin(t);
+
+        float random1 = Mathf.PerlinNoise(sample_x, sample_y) - 0.5f;
+        float random2 = Mathf.PerlinNoise(sample_x + 10.0f, sample_y) - 0.5f;
+
+        rb.AddForce(2.0f * random1 * Vector2.right + 0.5f * random2 * Vector2.up);
     }
 }

@@ -49,23 +49,38 @@ public class UpgradeScreen : MonoBehaviour
 
     public void HandleUpgrade(UpgradeType type)
     {
+        Player player = Player.Get();
+        PlayerMovement player_movement = player.GetComponent<PlayerMovement>();
         if (type == UpgradeType.Echolocation)
         {
-            Echolocation echo = Player.Get().GetComponent<Echolocation>();
-            echo.Upgrade();
-            echolocation.SetCost(echo.GetNextUpgradeCost());
+            Echolocation echo = player.GetComponent<Echolocation>();
+            int cost = echo.GetNextUpgradeCost();
+            if (player.GetFish() >= cost)
+            {
+                player.GiveItem(ItemType.Fish, -cost);
+                echo.Upgrade();
+                echolocation.SetCost(echo.GetNextUpgradeCost());
+            }
         }
         else if (type == UpgradeType.Oxygen)
         {
-            PlayerMovement player = PlayerMovement.Get();
-            player.UpgradeOxygen();
-            oxygen.SetCost(player.GetNextOxygenUpgradeCost());
+            int cost = player_movement.GetNextOxygenUpgradeCost();
+            if (player.GetFish() >= cost)
+            {
+                player.GiveItem(ItemType.Fish, -cost);
+                player_movement.UpgradeOxygen();
+                oxygen.SetCost(player_movement.GetNextOxygenUpgradeCost());
+            }
         }
         else if (type == UpgradeType.Speed)
         {
-            PlayerMovement player = PlayerMovement.Get();
-            player.UpgradeSpeed();
-            speed.SetCost(player.GetNextSpeedUpgradeCost());
+            int cost = player_movement.GetNextSpeedUpgradeCost();
+            if (player.GetFish() >= cost)
+            {
+                player.GiveItem(ItemType.Fish, -cost);
+                player_movement.UpgradeSpeed();
+                speed.SetCost(player_movement.GetNextSpeedUpgradeCost());
+            }
         }
     }
 }

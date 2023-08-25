@@ -5,10 +5,6 @@ using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public UnityEngine.UI.Image damageFlashImage; // Reference to the UI Image for the damage flash effect
-    public float flashSpeed = 5f; // How quickly the damaage flash effect fades away
-    private bool isDamaged = false; // controls damage flash
-
     Rigidbody2D rb = null;
     bool in_water = true;
     bool in_air = false;
@@ -85,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
     {
         UpdateSwimming();
         UpdateOxygen();
-        FlashScreenOnHit();
     }
 
     void UpdateSwimming()
@@ -181,9 +176,16 @@ public class PlayerMovement : MonoBehaviour
 
     void UpdateOxygen()
     {
+        ui.SetDepth(-transform.position.y, oxygen_levels[oxygen_level].max_depth);
+
         if (!dialogue.IsOpen())
         {
-            current_oxygen -= Time.deltaTime;
+            float oxygen_deplete_factor = 1.0f;
+            if (-transform.position.y > oxygen_levels[oxygen_level].max_depth)
+            {
+                oxygen_deplete_factor = oxygen_levels[oxygen_level].threshold_deplete_factor;
+            }
+            current_oxygen -= oxygen_deplete_factor * Time.deltaTime;
         }
 
         if (current_oxygen < 10.0f)
@@ -267,43 +269,30 @@ public class PlayerMovement : MonoBehaviour
 
     public void UpgradeSpeed()
     {
+        if (speed_level == speed_levels.Length - 1)
+        {
+            return;
+        }
+
         speed_level += 1;
+        ui.SetSpeedUpgradeLevel(speed_level);
     }
 
     public void UpgradeOxygen()
     {
+        if (oxygen_level == oxygen_levels.Length - 1)
+        {
+            return;
+        }
         oxygen_level += 1;
-
+        ui.SetOxygenUpgradeLevel(oxygen_level);
         current_oxygen = GetMaxOxygen();
     }
 
     public void TakeDamage(int amount)
     {
         current_oxygen -= amount;
-        isDamaged = true; // Set flag to trigger damage flash
-
-        // Check for death
-        if (current_oxygen <= 0)
-        {
-            // Dolphin Die :(
-            Debug.Log("Dolphin mans has died!");
-        }
-    }
-
-    private void FlashScreenOnHit()
-    {
-        if (isDamaged)
-        {
-            // Set the flash image's color to fully opaque
-            damageFlashImage.color = new Color(1, 0, 0, 0.2f);
-        }
-        else
-        {
-            // Otherwise, fade the flash image
-            damageFlashImage.color = Color.Lerp(damageFlashImage.color, new Color(1, 0, 0, 0), flashSpeed * Time.deltaTime);
-        }
-
-        isDamaged = false;
+        ui.DoRedFlash();
     }
 
     public static PlayerMovement Get()
@@ -313,6 +302,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Die()
     {
+        // Dolphin Die :(
+        Debug.Log("Dolphin mans has died!");
         GetComponent<Player>().Die();
         transform.position = initial_position;
         current_oxygen = GetMaxOxygen();
@@ -332,6 +323,6 @@ struct OxygenLevel
 {
     public int cost;
     public float time;
-    public float depth1;
-    public float depth2;
+    public float max_depth;
+    public float threshold_deplete_factor;
 }
