@@ -454,8 +454,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 7467272750632808293}
-  hide_at_zero: 1
-  hide_negative: 0
 --- !u!1 &1303106520841265001
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,8 +544,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 5073268031547786909}
-  hide_at_zero: 0
-  hide_negative: 1
 --- !u!1 &1444450274545447763
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,9 +580,9 @@ RectTransform:
   - {fileID: 5598976117033910452}
   - {fileID: 7946610016232061006}
   - {fileID: 4956990542505349984}
-  - {fileID: 3556347186407385216}
   - {fileID: 638643673456767453}
   - {fileID: 4383034563376965400}
+  - {fileID: 3556347186407385216}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -669,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4c599042eb0ee348a100fbd2940f1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  red_flash_time: 0.10000000149011612
   tooltip: {fileID: 6178824002912470641}
   dialogue: {fileID: 8190328854651320838}
   treasure: {fileID: 481847195349610863}
@@ -1068,8 +1065,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3593420336651300429}
-  hide_at_zero: 0
-  hide_negative: 1
 --- !u!1 &4561110857989971007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1593,8 +1588,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 6264346644150310509}
-  hide_at_zero: 1
-  hide_negative: 0
 --- !u!1 &6191985507189585118
 GameObject:
   m_ObjectHideFlags: 0
@@ -2264,8 +2257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 6077534257699329243}
-  hide_at_zero: 0
-  hide_negative: 1
 --- !u!1 &8451321012319772162
 GameObject:
   m_ObjectHideFlags: 0

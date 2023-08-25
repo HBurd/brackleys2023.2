@@ -7,6 +7,12 @@ using TMPro;
 public class UIGlobals : MonoBehaviour
 {
     [SerializeField]
+    double red_flash_time = 1.0f;
+    double red_flash_start = -10.0f;
+
+    float fade_amount;
+
+    [SerializeField]
     private Tooltip tooltip;
 
     [SerializeField]
@@ -114,6 +120,21 @@ public class UIGlobals : MonoBehaviour
 
     public void SetFade(float value)
     {
-        fade.color = new Color(0.0f, 0.0f, 0.0f, value);
+        fade_amount = value;
+    }
+
+    public void DoRedFlash()
+    {
+        red_flash_start = Time.timeAsDouble;
+    }
+
+    void Update()
+    {
+        double red_flash_t = (Time.timeAsDouble - red_flash_start) / red_flash_time;
+
+        // preserve fade alpha
+        Color flash_color = new Color(0.4f, 0.0f, 0.0f, 0.5f);
+        Color fade_color = new Color(0.0f, 0.0f, 0.0f, fade_amount);
+        fade.color = Color.Lerp(flash_color, fade_color, (float)red_flash_t);
     }
 }
