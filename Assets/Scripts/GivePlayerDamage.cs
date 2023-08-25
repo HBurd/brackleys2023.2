@@ -8,7 +8,7 @@ public class GivePlayerDamage : MonoBehaviour
     public float cooldownTime = 2.0f;
     private float nextDamageTime = 0.0f;
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (Time.time >= nextDamageTime)
         {
