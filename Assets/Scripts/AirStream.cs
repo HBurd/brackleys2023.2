@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class AirStream : MonoBehaviour
 {
-    public float forceStrength = 5.0f;  // The strength of the air stream force
-    public Vector2 direction = new Vector2(1.0f, 0.0f); // The direction of the air stream
+    [SerializeField]
+    float forceStrength = 5.0f;  // The strength of the air stream force
 
     // Use this for initialization
     void Start()
@@ -26,7 +26,7 @@ public class AirStream : MonoBehaviour
         if (other.GetComponent<Rigidbody2D>() != null)
         {
             // Apply the force to the GameObject's Rigidbody2D
-            other.GetComponent<Rigidbody2D>().AddForce(direction.normalized * forceStrength);
+            other.GetComponent<Rigidbody2D>().AddForce(-forceStrength * transform.right);
         }
     }
 }
