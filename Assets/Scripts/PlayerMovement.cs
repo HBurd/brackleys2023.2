@@ -9,15 +9,14 @@ public class PlayerMovement : MonoBehaviour
     bool in_water = true;
     bool in_air = false;
 
+    double damage_timeout = 0.0f;
+
     Animator animator = null;
 
     SpriteRenderer sprite = null;
 
     UIGlobals ui;
     DialogueSystem dialogue;
-
-    [SerializeField]
-    float max_power = 1.0f;
 
     [SerializeField]
     float control_radius = 5.0f;
@@ -101,19 +100,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (!Input.GetButton("Boost"))
         {
-            current_boost += 0.25f * Time.deltaTime;
-            current_boost = Mathf.Clamp(current_boost, 0.0f, 1.0f);
+            current_boost += 0.5f * Time.deltaTime;
+            current_boost = Mathf.Clamp(current_boost, 0.0f, boost_amount);
             boost_bar.SetValue(current_boost / boost_amount);
-        }
-
-        if (!in_water)
-        {
-            return;
         }
 
         if (dialogue.IsOpen())
         {
             rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0.0f;
             return;
         }
 
@@ -151,17 +146,17 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetMouseButton(0))
         {
-            float current_boost_factor = 1.0f;
+            float current_boost_factor = 0.0f;
             if (Input.GetButton("Boost") && current_boost > 0.0f)
             {
                 current_boost_factor = boost_factor;
                 current_boost -= Time.deltaTime;
-                current_boost = Mathf.Clamp(current_boost, 0.0f, 1.0f);
+                current_boost = Mathf.Clamp(current_boost, 0.0f, boost_amount);
                 boost_bar.SetValue(current_boost / boost_amount);
             }
 
-            float target_speed = Mathf.Lerp(0.0f, current_boost_factor * GetMaxSpeed(), mouse_delta.magnitude / control_radius);
-            float power = Mathf.Lerp(current_boost_factor * max_power, forward_drag * target_speed, velocity_forward.magnitude / target_speed);
+            float target_speed = Mathf.Lerp(0.0f, GetMaxSpeed(), mouse_delta.magnitude / control_radius);
+            float power = current_boost_factor + Mathf.Lerp(GetMaxPower(), forward_drag * target_speed, velocity_forward.magnitude / target_speed);
             rb.AddForce(power * mouse_delta_normalized);
             animator.SetBool("isSwimming", true);
         }
@@ -169,6 +164,8 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool("isSwimming", false);
         }
+
+        //Debug.Log(velocity_forward.magnitude);
 
         rb.AddForce(-forward_drag * velocity_forward);
         rb.AddForce(-forward_drag * normal_drag_factor * velocity_normal);
@@ -178,13 +175,19 @@ public class PlayerMovement : MonoBehaviour
     {
         ui.SetDepth(-transform.position.y, oxygen_levels[oxygen_level].max_depth);
 
+        if (in_air && !in_water)
+        {
+            current_oxygen = GetMaxOxygen();
+        }
+
         if (!dialogue.IsOpen())
         {
-            float oxygen_deplete_factor = 1.0f;
             if (-transform.position.y > oxygen_levels[oxygen_level].max_depth)
             {
-                oxygen_deplete_factor = oxygen_levels[oxygen_level].threshold_deplete_factor;
+                TakeDamage(5);
             }
+
+            float oxygen_deplete_factor = 1.0f;
             current_oxygen -= oxygen_deplete_factor * Time.deltaTime;
         }
 
@@ -205,7 +208,7 @@ public class PlayerMovement : MonoBehaviour
         oxygen_bar.SetValue(current_oxygen / GetMaxOxygen());
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Sky")
         {
@@ -214,6 +217,14 @@ public class PlayerMovement : MonoBehaviour
         else if (other.tag == "Water")
         {
             in_water = true;
+        }
+        else if (other.tag == "OxygenRefill")
+        {
+            current_oxygen = GetMaxOxygen();
+        }
+        else if (other.tag == "Spike")
+        {
+            TakeDamage(10);
         }
     }
 
@@ -226,8 +237,6 @@ public class PlayerMovement : MonoBehaviour
         else if (other.tag == "Water")
         {
             in_water = false;
-
-            current_oxygen = GetMaxOxygen();
 
             if (can_blow)
             {
@@ -247,6 +256,11 @@ public class PlayerMovement : MonoBehaviour
     float GetMaxOxygen()
     {
         return oxygen_levels[oxygen_level].time;
+    }
+
+    float GetMaxPower()
+    {
+        return in_water ? speed_levels[speed_level].power : 0.1f;
     }
 
     public int GetNextSpeedUpgradeCost()
@@ -289,8 +303,16 @@ public class PlayerMovement : MonoBehaviour
         current_oxygen = GetMaxOxygen();
     }
 
-    public void TakeDamage(int amount)
+    void TakeDamage(int amount)
     {
+        if (Time.timeAsDouble < damage_timeout)
+        {
+            return;
+        }
+
+        damage_timeout += Time.timeAsDouble + 3.0;
+
+
         current_oxygen -= amount;
         ui.DoRedFlash();
     }
@@ -316,6 +338,7 @@ struct SpeedLevel
 {
     public int cost;
     public float max_speed;
+    public float power;
 }
 
 [System.Serializable]

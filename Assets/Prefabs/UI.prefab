@@ -431,7 +431,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -1008624855, guid: f6aa4cefeec199c4eb8ed6fbb10455c4, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -454,6 +454,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 7467272750632808293}
+  hide_at_zero: 0
 --- !u!1 &1303106520841265001
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +522,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d022e3f33ff28054393558ed9adff4d6, type: 3}
+  m_Sprite: {fileID: -1593606808, guid: 6181b9e66a1e5ca478409b2249b72f53, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -544,6 +545,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 5073268031547786909}
+  hide_at_zero: 1
 --- !u!1 &1444450274545447763
 GameObject:
   m_ObjectHideFlags: 0
@@ -1042,7 +1044,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 1420738011, guid: d30950831c4d32f438f627a87d46fe39, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -1065,6 +1067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 3593420336651300429}
+  hide_at_zero: 1
 --- !u!1 &4561110857989971007
 GameObject:
   m_ObjectHideFlags: 0
@@ -1588,6 +1591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 6264346644150310509}
+  hide_at_zero: 0
 --- !u!1 &6191985507189585118
 GameObject:
   m_ObjectHideFlags: 0
@@ -2234,7 +2238,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 599c6ca17c935504f81f2fcd22ce28b8, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -2257,6 +2261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 6077534257699329243}
+  hide_at_zero: 1
 --- !u!1 &8451321012319772162
 GameObject:
   m_ObjectHideFlags: 0

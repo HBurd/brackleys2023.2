@@ -8,15 +8,27 @@ public class InventoryCounter : MonoBehaviour
     [SerializeField]
     TMP_Text text;
 
+    [SerializeField]
+    bool hide_at_zero;
+
     // Start is called before the first frame update
     void Start()
     {
-        SetValue(0);
+        //SetValue(0);
     }
 
     public void SetValue(int value)
     {
         text.text = value.ToString();
-        gameObject.SetActive(value != 0);
+
+        if (value == 0 && hide_at_zero)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
+            Debug.Log("Enable");
+        }
     }
 }

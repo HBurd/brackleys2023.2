@@ -5,6 +5,9 @@ using UnityEngine;
 public class VolumetricLightManager : MonoBehaviour
 {
     [SerializeField]
+    bool dim_global_light = true;
+
+    [SerializeField]
     int passes = 1;
     void Awake()
     {
@@ -52,7 +55,10 @@ public class VolumetricLightManager : MonoBehaviour
             }
         }
 
-        GameObject.Find("Sky/Global Light").GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity = 0.0f;
+        if (dim_global_light)
+        {
+            GameObject.Find("Sky/Global Light").GetComponent<UnityEngine.Rendering.Universal.Light2D>().intensity = 0.0f;
+        }
     }
 
     List<VolumetricLight> GetNeighbours(VolumetricLight light, VolumetricLight[] lights)

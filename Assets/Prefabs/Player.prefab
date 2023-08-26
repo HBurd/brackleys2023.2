@@ -4943,7 +4943,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 37275238878841316}
@@ -5041,7 +5041,7 @@ MonoBehaviour:
   oxygen_levels:
   - cost: 0
     time: 30
-    max_depth: 40
+    max_depth: 60
     threshold_deplete_factor: 3
   - cost: 10
     time: 45
@@ -5051,7 +5051,7 @@ MonoBehaviour:
     time: 60
     max_depth: 90
     threshold_deplete_factor: 3
-  boost_amount: 1
+  boost_amount: 2
   boost_factor: 2
   particles: {fileID: 37275238878841316}
 --- !u!70 &4615741743360627261
@@ -5086,8 +5086,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.079298295, y: -0.019974094}
-  m_Size: {x: 0.8221291, y: 0.32072628}
+  m_Offset: {x: 0.09691137, y: -0.0698832}
+  m_Size: {x: 1.6559254, y: 0.5321186}
   m_Direction: 1
 --- !u!212 &3457181198554110377
 SpriteRenderer:
