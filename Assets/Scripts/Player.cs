@@ -49,6 +49,7 @@ public class Player : MonoBehaviour
                 break;
             case ItemType.Flippers:
                 ui.SetSpeedUpgradeLevel(0);
+                Debug.Log("Get flippers");
                 break;
         }
         treasure_display.SetValue(treasure);
@@ -77,7 +78,7 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Barrel")
         {
-            ship.SpawnFish(treasure);
+            ship.SpawnFish(10 * treasure);
             GiveItem(ItemType.Treasure, -treasure);
         }
     }

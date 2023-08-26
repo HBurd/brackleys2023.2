@@ -30,8 +30,8 @@ public class Ship : MonoBehaviour
         for (int i = 0; i < count; ++i)
         {
             GameObject new_fish = Instantiate(fish);
-            new_fish.transform.position = fish_spawn.position + (Random.Range(-1.0f, 1.0f) * Vector3.right);
-            new_fish.GetComponent<Rigidbody2D>().velocity = Vector2.down * 1.0f;
+            new_fish.transform.position = fish_spawn.position + (Random.Range(-3.0f, 3.0f) * Vector3.right);
+            new_fish.GetComponent<Rigidbody2D>().velocity = Vector2.down * Random.Range(0.8f, 3.0f);
         }
     }
 }
