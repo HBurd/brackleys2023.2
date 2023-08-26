@@ -5,10 +5,12 @@ using UnityEngine;
 public class Talkable : MonoBehaviour
 {
     DialogueSystem dialogue;
-    Tooltip tooltip = null;
 
     [SerializeField]
     TextAsset text_json;
+
+    [SerializeField]
+    bool open_on_init = false;
 
     Dictionary<string, Dialogue> loaded_text = new Dictionary<string, Dialogue>();
     string current_dialogue;
@@ -22,12 +24,14 @@ public class Talkable : MonoBehaviour
     public delegate void StateChangeEventHandler(string new_state);
     public event StateChangeEventHandler StateChangeEvent;
 
+    public delegate void OpenEventHandler(string last_state);
+    public event OpenEventHandler OpenEvent;
+
     string previous = "intro";
 
     // Start is called before the first frame update
     void Start()
     {
-        tooltip = UIGlobals.Get().GetTooltip();
         dialogue = UIGlobals.Get().GetDialogue();
 
         LoadedText dialogues = JsonUtility.FromJson<LoadedText>(text_json.text);
@@ -37,15 +41,19 @@ public class Talkable : MonoBehaviour
         {
             loaded_text.Add(dialogue.name, dialogue);
         }
+        
+        if (open_on_init)
+        {
+            Interact();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (player != null && Input.GetMouseButtonDown(1))
+        if (player != null && Input.GetButtonDown("Interact"))
         {
             Interact();
-            tooltip.SetText("RMB to advance");
         }
     }
 
@@ -55,7 +63,6 @@ public class Talkable : MonoBehaviour
         if (other.tag == "Player")
         {
             player = other.GetComponent<Player>();
-            tooltip.SetText("RMB to talk");
         }
     }
 
@@ -64,7 +71,6 @@ public class Talkable : MonoBehaviour
         if (other.tag == "Player")
         {
             player = null;
-            tooltip.SetText("");
         }
     }
 
@@ -108,12 +114,18 @@ public class Talkable : MonoBehaviour
     {
         dialogue.Open();
 
+        if (text_index == 0)
+        {
+            OpenEvent?.Invoke(current_dialogue);
+        }
+
         bool dont_pop = false;
         if (text_index >= loaded_text[current_dialogue].dialogue.Length)
         {
             past_states.Add(current_dialogue);
             SetState(loaded_text[current_dialogue].next);
             text_index = 0;
+
             if (!PopQueuedText())
             {
                 dialogue.Close();

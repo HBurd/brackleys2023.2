@@ -7,7 +7,7 @@
 			"dialogue": [
 				{
 					"name": "Scook",
-					"text": "Hi I'm a parrot"
+					"text": "Oh thank god you swap by. I need help, my name is Scook-"
 				},
 				{
 					"name": "Carl",
@@ -15,7 +15,35 @@
 				},
 				{
 					"name": "Scook",
-					"text": "This idiot thinks he's a pirate"
+					"text": "This guy is an actual idiot, I came with him to complete the parrot dream of standing on a pirate's shoulder ..."
+				},
+				{
+					"name": "Scook",
+					"text": "But this guy's a fake. His name is Carl, his hook and pegleg are from the dollar store and he speaks in pirate buzzwords."
+				},
+				{
+					"name": "Carl",
+					"text": "WEIIIGHHHHH ANNNNCHOOOOR!!!!!"
+				},
+				{
+					"name": "Scook",
+					"text": "He's essentially nothing more than a cosplayer at sea."
+				},
+				{
+					"name": "Scook",
+					"text": "Listen, I did some snooping in the Captain's quarters and saw his journal. He spent his life savings on this boat and won't leave until he finds treasure."
+				},
+				{
+					"name": "Scook",
+					"text": "We're too far from the shore for me to fly home so I need this shop to leave. If you can bring us treasure I'll pay you in fish, lots of them!"
+				},
+				{
+					"name": "Scook",
+					"text": "You can drop off treasure by swimming and jumping over the barrel behind the ship!"
+				},
+				{
+					"name": "Scook",
+					"text": "Go find Wally the whale, he was here earlier and swap down to get away from this guy. He'll help you navigate the underwater caves."
 				}
 			]
 		},
@@ -25,11 +53,7 @@
 			"dialogue": [
 				{
 					"name": "Scook",
-					"text": "Didn't I just talk to you?"
-				},
-				{
-					"name": "Scook",
-					"text": "Go do something useful"
+					"text": "Do you have treasure? Go drop it off in the barrel out back. If not, go do something useful and find some please!"
 				}
 			]
 		},
@@ -38,16 +62,42 @@
 			"next": "previous",
 			"dialogue": [
 				{
+					"name": "Scook",
+					"text": "You've gotta be more careful, you nearly died!"
+				},
+				{
 					"name": "Carl",
-					"text": "Ye be standin' on the brink o' Davey Jones's Locker, ye Scallywag! Shiver me timbers!!!! "
+					"text": "YEEE BE STANDIN' ON THE BRINK O' DAVEY JONES' LOCKER, YA SCALLYWAG!!! SHIVERRRR ME TIMBERRRRS!!!"
 				},
 				{
 					"name": "Scook",
-					"text": "Carl, you sound like a complete idiot."
+					"text": "I've got to get out of here..."
+				}
+			]
+		},
+		{
+			"name": "end",
+			"next": "none",
+			"dialogue": [
+				{
+					"name": "Carl",
+					"text": "AVAST YE! A PILE OF COFFERS IN ME BARREL, ME HEARTIES. "
 				},
 				{
 					"name": "Scook",
-					"text": "But seriously, be careful. I had to feed you some fish to revive you."
+					"text": "I think Carl is satisfied now, we can finally go home. Thanks for all your help!"
+				},
+				{
+					"name": "Carl",
+					"text": "PULL IT IN, STOW IT IN THE ORLOP!"
+				},
+				{
+					"name": "Scook",
+					"text": "I wonder when he'll notice he has no crew to take his orders. Let's hope he still remembers how to sail back."
+				},
+				{
+					"name": "Carl",
+					"text": "ARRRRRRRRRRRRRRRRRRRRRRRRR"
 				}
 			]
 		}

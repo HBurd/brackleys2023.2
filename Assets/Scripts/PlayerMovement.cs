@@ -105,13 +105,6 @@ public class PlayerMovement : MonoBehaviour
             boost_bar.SetValue(current_boost / boost_amount);
         }
 
-        if (dialogue.IsOpen())
-        {
-            rb.velocity = Vector2.zero;
-            rb.angularVelocity = 0.0f;
-            return;
-        }
-
         Vector3 mouse_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition + 10.0f * Vector3.forward);
         Vector3 mouse_delta = mouse_pos - transform.position;
 
@@ -141,13 +134,20 @@ public class PlayerMovement : MonoBehaviour
 
         transform.rotation = Quaternion.AngleAxis(angle * 180.0f / Mathf.PI, Vector3.forward);
 
+        if (dialogue.IsOpen())
+        {
+            rb.velocity = Vector2.zero;
+            rb.angularVelocity = 0.0f;
+            return;
+        }
+
         Vector2 velocity_forward = Vector2.Dot(rb.velocity, mouse_delta_normalized) * mouse_delta_normalized;
         Vector2 velocity_normal = rb.velocity - velocity_forward;
 
         if (Input.GetMouseButton(0))
         {
             float current_boost_factor = 0.0f;
-            if (Input.GetButton("Boost") && current_boost > 0.0f)
+            if (Input.GetButton("Boost") && current_boost > 0.0f && in_water)
             {
                 current_boost_factor = boost_factor;
                 current_boost -= Time.deltaTime;
@@ -167,8 +167,11 @@ public class PlayerMovement : MonoBehaviour
 
         //Debug.Log(velocity_forward.magnitude);
 
-        rb.AddForce(-forward_drag * velocity_forward);
-        rb.AddForce(-forward_drag * normal_drag_factor * velocity_normal);
+        if (in_water)
+        {
+            rb.AddForce(-forward_drag * velocity_forward);
+            rb.AddForce(-forward_drag * normal_drag_factor * velocity_normal);
+        }
     }
 
     void UpdateOxygen()

@@ -3,45 +3,77 @@
 	"dialogue": [
 		{
 			"name": "intro",
-			"next": "go_look",
+			"next": "intro",
 			"dialogue": [
 				{
 					"name": "Wally",
-					"text": "I'm Wally"
+					"text": "Well heeeeeeeeey there little guy, name's Wally. What can I do for ya?"
 				},
 				{
 					"name": "Wally",
-					"text": "If you bring me back some metal things I can upgrade your abilities"
+					"text": "Hmmm? Oh yeah I swam down here to get away from the noise of the pirate yelling the same 4 phrases."
+				},
+				{
+					"name": "Wally",
+					"text": "Scook told me that treasure will get them to leave, but she doesn’t realize I can’t fit in the caves and the ship is blocking my way to swim out."
+				},
+				{
+					"name": "Wally",
+					"text": "I can help you find treasure in other ways though. Bring me items and I can upgrade your swim speed and oxygen resevoir..."
+				},
+				{
+					"name": "Wally",
+					"text": "For a price of course, fish will do."
+				},
+				{
+					"name": "Wally",
+					"text": "Here are some tips: Watch your oxygen meter, if that depletes you'll pass out! Look for oxygen bubbles in cave systems, those will replenish your oxygen."
+				},
+				{
+					"name": "Wally",
+					"text": "In dark caves, you can rely on echolocation to see the cave walls. I can help you improve this skill, in exchange for a few fish."
+				},
+				{
+					"name": "Wally",
+					"text": "And you can use right-click to boost!"
+				},
+				{
+					"name": "Wally",
+					"text": "Good luck, I'll be here waiting."
 				}
 			]
 		},
 		{
-			"name": "go_look",
-			"next": "go_look",
+			"name": "found_item",
+			"next": "found_item",
 			"dialogue": [
 				{
 					"name": "Wally",
-					"text": "Come back to me if you find any weird metal objects"
+					"text": "Well heeeeeeeeey again, got something for me?"
+				},
+				{
+					"name": "Wally",
+					"text": "I can repurpose this item and get you better suited for the caves!"
 				}
 			]
 		},
 		{
-			"name": "find_oxygen",
-			"next": "upgrades",
+			"name": "find_more_items",
+			"next": "find_more_items",
 			"dialogue": [
 				{
 					"name": "Wally",
-					"text": "I see you found a derilect scuba diver's tank. I can fix it up for you, in exchange for a few fish..."
+					"text": "Well heeeeeeeeey again, there are still items to be found in the caves! Take a look at what I have to offer in the meantime."
 				}
 			]
 		},
 		{
-			"name": "find_flippers",
-			"next": "upgrades",
+			"name": "found_all_items",
+			"next": "found_all_items",
 			"dialogue": [
 				{
 					"name": "Wally",
-					"text": "I see you found an abandoned pair of scuba flippers. I can fix them up for you, in exchange for a few fish..."
+					"text": "Well heeeeeeeeey again."
 				}
 			]
 		},
@@ -51,7 +83,7 @@
 			"dialogue": [
 				{
 					"name": "Wally",
-					"text": "Are you interested in any of these upgrades?"
+					"text": "Take a look at what I have to offer."
 				}
 			]
 		}

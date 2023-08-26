@@ -13,9 +13,6 @@ public class UIGlobals : MonoBehaviour
     float fade_amount;
 
     [SerializeField]
-    private Tooltip tooltip;
-
-    [SerializeField]
     private DialogueSystem dialogue;
 
     [SerializeField]
@@ -50,10 +47,6 @@ public class UIGlobals : MonoBehaviour
     [SerializeField]
     private InventoryCounter speed_level;
 
-    public Tooltip GetTooltip()
-    {
-        return tooltip;
-    }
 
     public DialogueSystem GetDialogue()
     {
