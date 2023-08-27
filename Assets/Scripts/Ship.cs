@@ -16,6 +16,7 @@ public class Ship : MonoBehaviour
     void Start()
     {
         Player.Get().DieEvent += HandleDeath;
+        Player.Get().MaxTreasureEvent += MaxTreasureHandler;
         talkable = GetComponent<Talkable>();
     }
 
@@ -33,5 +34,11 @@ public class Ship : MonoBehaviour
             new_fish.transform.position = fish_spawn.position + (Random.Range(-3.0f, 3.0f) * Vector3.right);
             new_fish.GetComponent<Rigidbody2D>().velocity = Vector2.down * Random.Range(0.8f, 3.0f);
         }
+    }
+
+    void MaxTreasureHandler()
+    {
+        Debug.Log("win");
+        talkable.SayAfter("end", "intro", 1);
     }
 }

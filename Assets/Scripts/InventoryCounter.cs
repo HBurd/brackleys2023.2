@@ -28,7 +28,6 @@ public class InventoryCounter : MonoBehaviour
         else
         {
             gameObject.SetActive(true);
-            Debug.Log("Enable");
         }
     }
 }

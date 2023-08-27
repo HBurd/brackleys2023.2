@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -14,12 +15,24 @@ public class Player : MonoBehaviour
 
     UIGlobals ui;
 
+    [SerializeField]
+    TMP_Text treasure_counter;
+
+
+    int deposited_treasure = 0;
+
+    [SerializeField]
+    int total_treasure = 20;
+
 
     public delegate void ItemEventHandler(ItemType type, int count);
     public event ItemEventHandler ItemEvent;
 
     public delegate void DieEventHandler();
     public event DieEventHandler DieEvent;
+
+    public delegate void MaxTreasureEventHandler();
+    public event MaxTreasureEventHandler MaxTreasureEvent;
 
     void Start()
     {
@@ -32,6 +45,8 @@ public class Player : MonoBehaviour
         // setting negative just hides fully
         ui.SetOxygenUpgradeLevel(-1);
         ui.SetSpeedUpgradeLevel(-1);
+
+        treasure_counter.text = "0 / " + total_treasure;
     }
 
     public void GiveItem(ItemType type, int count)
@@ -49,12 +64,10 @@ public class Player : MonoBehaviour
                 break;
             case ItemType.Flippers:
                 ui.SetSpeedUpgradeLevel(0);
-                Debug.Log("Get flippers");
                 break;
         }
         treasure_display.SetValue(treasure);
         fish_display.SetValue(fish);
-
 
         ItemEvent?.Invoke(type, count);
     }
@@ -78,8 +91,15 @@ public class Player : MonoBehaviour
     {
         if (other.tag == "Barrel")
         {
+            deposited_treasure += treasure;
             ship.SpawnFish(10 * treasure);
             GiveItem(ItemType.Treasure, -treasure);
+            treasure_counter.text = deposited_treasure.ToString() + " / " + total_treasure;
+
+            if (deposited_treasure >= total_treasure)
+            {
+                MaxTreasureEvent?.Invoke();
+            }
         }
     }
 
