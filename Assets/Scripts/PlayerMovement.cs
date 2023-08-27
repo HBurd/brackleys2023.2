@@ -313,7 +313,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
-        damage_timeout += Time.timeAsDouble + 3.0;
+        damage_timeout = Time.timeAsDouble + 3.0;
 
 
         current_oxygen -= amount;

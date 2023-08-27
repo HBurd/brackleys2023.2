@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Talkable : MonoBehaviour
 {
@@ -18,6 +19,9 @@ public class Talkable : MonoBehaviour
 
     HashSet<string> past_states = new HashSet<string>();
     List<QueuedText> queued_text = new List<QueuedText>();
+
+    [SerializeField]
+    SpriteRenderer spacebar;
 
     Player player;
 
@@ -63,6 +67,7 @@ public class Talkable : MonoBehaviour
         if (other.tag == "Player")
         {
             player = other.GetComponent<Player>();
+            spacebar.gameObject.SetActive(true);
         }
     }
 
@@ -71,6 +76,7 @@ public class Talkable : MonoBehaviour
         if (other.tag == "Player")
         {
             player = null;
+            spacebar.gameObject.SetActive(false);
         }
     }
 
@@ -130,6 +136,12 @@ public class Talkable : MonoBehaviour
             {
                 dialogue.Close();
                 StateChangeEvent?.Invoke("");
+
+                if (past_states.Contains("end"))
+                {
+                    SceneManager.LoadScene("MainMenu");
+                }
+
                 return;
             }
             // successfully popped, don't pop again
